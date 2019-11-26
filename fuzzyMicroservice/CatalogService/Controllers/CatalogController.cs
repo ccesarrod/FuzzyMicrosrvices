@@ -16,13 +16,13 @@ namespace CatalogService.Controllers
             _service = service;
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult<IEnumerable<Category>> All()
         {
             return _service.GetAll();
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult<Category> Get(int id)
         {
           return _service.GetCategoryById(id);

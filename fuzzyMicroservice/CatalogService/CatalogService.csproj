@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CatalogAPI\CategoryAPI.csproj" />
     <ProjectReference Include="..\DataCore\DataCore.csproj" />
   </ItemGroup>
 

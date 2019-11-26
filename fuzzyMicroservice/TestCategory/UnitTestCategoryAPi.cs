@@ -1,9 +1,6 @@
-using CategoryAPI.Repository;
 using DataCore.Entities;
-using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Tests
 {
