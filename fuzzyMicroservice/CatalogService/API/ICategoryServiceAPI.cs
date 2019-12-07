@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using DataCore.Entities;
 
-namespace CatalogService
+namespace CatalogService.API
 {
     public interface ICategoryServiceAPI
     {

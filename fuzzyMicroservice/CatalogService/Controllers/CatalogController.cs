@@ -1,12 +1,14 @@
-﻿using CategoryAPI;
+﻿
+using CatalogService.API;
 using DataCore.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace CatalogService.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+
+    [Route("api/[controller]")]
     public class CatalogController : ControllerBase
     {
         private readonly ICategoryServiceAPI _service;
@@ -22,7 +24,7 @@ namespace CatalogService.Controllers
             return _service.GetAll();
         }
 
-        [HttpGet]
+        [HttpGet("id")]
         public ActionResult<Category> Get(int id)
         {
           return _service.GetCategoryById(id);
