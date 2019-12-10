@@ -24,7 +24,7 @@ namespace CatalogService.Controllers
             return _service.GetAll();
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public ActionResult<Category> Get(int id)
         {
           return _service.GetCategoryById(id);

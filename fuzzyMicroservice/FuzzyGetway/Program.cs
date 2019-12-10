@@ -22,8 +22,8 @@ namespace FuzzyGetway
         {
             return WebHost.CreateDefaultBuilder(args)
                
-                //.UseKestrel()
-                .UseIIS()
+                .UseKestrel()
+                //UseIIS()
                 // .UseUrls("http://localhost:9000")
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
