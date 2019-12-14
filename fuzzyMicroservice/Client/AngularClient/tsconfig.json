@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
+  "compilerOptions": {    
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -17,6 +16,21 @@
     "lib": [
       "es2018",
       "dom"
+    ]
+  },
+  "baseUrl": "./src",
+  "paths": {
+    "@services/*": [
+      "app/services/*"
+    ],
+    "@modules/*": [
+      "app/modules/*"
+    ],
+    "@environments/*": [
+      "./src/environments/*"
+    ],
+    "@components/*": [
+      "app/*"
     ]
   },
   "angularCompilerOptions": {
