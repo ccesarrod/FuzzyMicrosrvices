@@ -1,1 +1,13 @@
-<p>category works!</p>
+<div class="container">
+    <div *ngFor="let category of categories">
+      <div class="col-xs-6 col-md-3">
+        <a routerLink="/category-product/{{category.categoryID}}" class="thumbnail">
+          <img src="../../assets/Categories/{{'Cat' + category.categoryID + '.jpg'}}" alt="{{category.description}}"  />
+        </a>
+        <div class="text-left">
+          <small class="text-muted">{{category.categoryName}}</small>
+        </div>
+      </div>
+      </div>
+    </div>
+  

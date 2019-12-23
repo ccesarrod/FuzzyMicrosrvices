@@ -1,5 +1,6 @@
 ﻿using DataCore;
 using DataCore.Entities;
+using DataCore.Repository;
 
 namespace CatalogService.DataCore
 {

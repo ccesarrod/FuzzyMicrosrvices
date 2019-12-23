@@ -1,1 +1,23 @@
-<p>category-product works!</p>
+<h1>Products by category</h1>
+
+
+<p *ngIf="!products"><em>Loading...</em></p>
+<div class="container-fluid">
+<div class="row">
+  <div class="col-xs-6 col-md-3"  *ngFor="let product of products">
+    <div class="thumbnail">
+      <img src="../../assets/Products/{{ product.productID+ '.jpg'}}"  style="max-height: 200px;overflow: hidden" />
+    </div>
+    <div class="caption">
+      <h5>{{product.productName}}</h5>
+      <p>Units: {{product.quantityPerUnit}}</p>
+      <p>Price: {{product.unitPrice}}</p>
+
+      <p>
+        <button class="btn bg-primary" (click)="addToCart(product)">Add to chart</button>
+      </p>
+    </div>
+  </div>
+</div>
+</div>  
+

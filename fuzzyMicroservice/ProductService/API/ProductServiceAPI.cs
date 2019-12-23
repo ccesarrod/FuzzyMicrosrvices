@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DataCore.Entities;
-using ProductService.DataCore;
+using DataCore.Repository;
 
 namespace ProductService.API
 {

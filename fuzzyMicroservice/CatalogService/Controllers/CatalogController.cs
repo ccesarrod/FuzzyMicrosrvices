@@ -29,5 +29,13 @@ namespace CatalogService.Controllers
         {
           return _service.GetCategoryById(id);
         }
+
+        [HttpGet("[action]/{id}")]
+        public IEnumerable<Product> ProductsByCategoryId(int id)        {
+
+            return _service.ProductsByCategoryId(id);
+           
+
+        }
     }
 }

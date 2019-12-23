@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace DataCore
+namespace DataCore.Repository
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : class
     {

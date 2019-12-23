@@ -1,0 +1,33 @@
+<h1>Products</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf="!products"><em>Loading...</em></p>
+
+<table class='table' *ngIf="products">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Category Id</th>
+      <th>Quantity Unit</th>
+      <th>Unit Price</th>
+      <th>Units in Stock</th>
+      <th>Units in Order</th>
+      <th>Reorder Level</th>
+      <th>Discontinued</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.productName }}</td>
+      <td>{{ product.categoryId }}</td>
+      <td>{{ product.quantityPerUnit }}</td>
+      <td>{{ product.unitPrice }}</td>
+      <td>{{ product.unitsInStock }}</td>
+      <td>{{ product.unitsOnOrder}}</td>
+      <td>{{ product.reorderLevel }}</td>
+      <td>{{ product.discontinued }}</td>
+    </tr>
+  </tbody>
+</table>
+

@@ -7,5 +7,6 @@ namespace CatalogService.API
     {
         List<Category> GetAll();
         Category GetCategoryById(int categoryId);
+        List<Product> ProductsByCategoryId(int categoryId);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CatalogService.API;
 using CatalogService.DataCore;
 using DataCore;
+using DataCore.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,8 @@ namespace CatalogService
             });
 
            //services.AddScoped<IRepository<Category>, ICategoryRepository>();
-        services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryServiceAPI, CategoryServiceAPI>();
         }
 

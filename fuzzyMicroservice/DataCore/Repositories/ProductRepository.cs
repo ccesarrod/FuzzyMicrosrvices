@@ -1,11 +1,6 @@
-﻿using DataCore;
-using DataCore.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DataCore.Entities;
 
-namespace ProductService.DataCore
+namespace DataCore.Repository
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {

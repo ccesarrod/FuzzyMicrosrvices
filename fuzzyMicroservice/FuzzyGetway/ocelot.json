@@ -1,7 +1,7 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/api/Product/{everything}",
+      "DownstreamPathTemplate": "/api/product",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,7 +9,7 @@
           "Port": 7002
         }
       ],
-      "UpstreamPathTemplate": "/Product/{everything}",
+      "UpstreamPathTemplate": "/api/product",
       "UpstreamHttpMethod": [ "Get" ]
     },
     {

@@ -1,5 +1,6 @@
 ﻿using CatalogService.DataCore;
 using DataCore.Entities;
+using DataCore.Repository;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,22 +8,30 @@ namespace CatalogService.API
 {
     public class CategoryServiceAPI : ICategoryServiceAPI
     {
-        private ICategoryRepository _repository;
-        public  CategoryServiceAPI(ICategoryRepository repository)
+        private ICategoryRepository _categoryRepository;
+        private readonly IProductRepository _productRepository;
+
+        public  CategoryServiceAPI(ICategoryRepository repository,IProductRepository productRepository)
         {
-            _repository = repository;
+            _categoryRepository = repository;
+            _productRepository = productRepository;
         }
 
     
 
         public List<Category> GetAll()
         {
-            return _repository.GetAll().ToList();
+            return _categoryRepository.GetAll().ToList();
         }
 
         public Category GetCategoryById(int categoryId)
         {
-            return _repository.Find(x => x.CategoryID == categoryId).FirstOrDefault();
+            return _categoryRepository.Find(x => x.CategoryID == categoryId).FirstOrDefault();
+        }
+
+        public List<Product> ProductsByCategoryId(int categoryId)
+        {
+           return _productRepository.Find(p => p.CategoryID == categoryId).ToList();
         }
     }
 

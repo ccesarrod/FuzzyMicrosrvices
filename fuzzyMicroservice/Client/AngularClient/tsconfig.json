@@ -16,23 +16,30 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@services/*": [
+        "src/app/services/*"
+      ],
+      "@modules/*": [
+        "src/app/modules/*"
+      ],
+      "@models/*": [
+        "src/app/models/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@environments/*": [
+        "/src/environments/*"
+      ],
+      "@components/*": [
+        "app/*"
+      ]
+    }
   },
-  "baseUrl": "./src",
-  "paths": {
-    "@services/*": [
-      "app/services/*"
-    ],
-    "@modules/*": [
-      "app/modules/*"
-    ],
-    "@environments/*": [
-      "./src/environments/*"
-    ],
-    "@components/*": [
-      "app/*"
-    ]
-  },
+ 
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true

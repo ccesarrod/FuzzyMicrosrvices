@@ -1,0 +1,58 @@
+
+  <div class='navbar navbar-expand-lg navbar-dark bg-dark'>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+
+      <span class="navbar-toggler-icon"></span>
+
+    </button>
+    <!--<a class='navbar-brand' [routerLink]='["/"]'>fuzzy_core</a>-->
+
+
+
+    <div  class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }' class="nav-item active">
+          <a [routerLink]='["/"]' (click)='collapse()' class="nav-link">
+            <span class='sr-only glyphicon glyphicon-home'></span> Home
+          </a>
+        </li>
+        <li [routerLinkActive]='["link-active"]' class="nav-item active">
+          <a [routerLink]='["/categories"]' (click)='collapse()' class="nav-link" style="color:white;">
+            <span class='glyphicon glyphicon-education'></span> Categories
+          </a>
+        </li>
+        <li [routerLinkActive]='["link-active"]' class="nav-item active">
+          <a [routerLink]='["/fetch-data"]' (click)='collapse()' class="nav-link bg-ligth">
+            <span class='glyphicon glyphicon-th-list'></span> Fetch data
+          </a>
+        </li>
+        <li [routerLinkActive]='["link-active"]' class="nav-item active">
+          <a [routerLink]='["/products"]' (click)='collapse()' class="nav-link">
+            <span class='glyphicon glyphicon-th-list'></span> Products
+          </a>
+        </li>
+        <!-- <li [routerLinkActive]='["link-active"]' class="nav-item active">
+          <a [routerLink]='["/cart"]' id="lastVal" class="pl-5 float-right"><img src="../../assets/glyphicons-203-shopping-cart.png" class="bg-info rounded" />{{(shoppingCartItems | async).length}}</a>
+        </li> -->
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">          
+          <span class="nav-link">{{userName}}</span>       
+        </li>
+        <li class="nav-item active">
+          <a (click)='login()' class="nav-link">
+            <span class='glyphicon glyphicon-login'></span> {{loginAction}}
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a [routerLink]='["/register"]' (click)='collapse()' class="nav-link">
+            <span class='glyphicon glyphicon-login'></span> Register
+          </a>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+
+

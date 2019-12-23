@@ -1,7 +1,6 @@
-﻿using DataCore;
-using DataCore.Entities;
+﻿using DataCore.Entities;
 
-namespace ProductService.DataCore
+namespace DataCore.Repository
 {
     public interface IProductRepository : IRepository<Product>
     {
