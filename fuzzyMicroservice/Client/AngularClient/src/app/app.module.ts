@@ -7,6 +7,7 @@ import { NavmenuComponent } from '@shared/navmenu/navmenu.component';
 import { CategoryModule } from '@modules/category/category.module';
 import { ProductModule } from '@modules/product/product.module';
 import { HomeComponent } from '@modules/home/home.component';
+import { AccountModule } from '@modules/account/account.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HomeComponent } from '@modules/home/home.component';
     HttpClientModule,
     AppRoutingModule,
     CategoryModule,
-    ProductModule
+    ProductModule,
+    AccountModule
   ],
   providers: [],
   bootstrap: [AppComponent]

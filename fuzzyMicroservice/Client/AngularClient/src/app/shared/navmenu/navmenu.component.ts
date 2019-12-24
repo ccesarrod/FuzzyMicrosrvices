@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AccountService } from '@services/account.service';
 
 @Component({
   selector: 'app-navmenu',
@@ -15,7 +16,7 @@ export class NavmenuComponent implements OnInit {
   loginAction: string = "Login";
   isLogin: boolean = false;
 
-  constructor( private router:Router) {}
+  constructor( private router:Router, private authenticationService:AccountService) {}
 
   collapse() {
     this.isExpanded = false;
@@ -42,18 +43,18 @@ export class NavmenuComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
- /*  login() {
+   login() {
     if (this.isLogin) {
       this.authenticationService.logout();
       this.isLogin = false;
       this.loginAction = 'Login';
       this.userName = '';
-      this.cartService.clearCart();
+     // this.cartService.clearCart();
       this.router.navigate(['/']);
     }
     else {
-      this.router.navigate(['login']);
+      this.router.navigate(['/account/login']);
     }
-  } */
+  } 
 
 }
