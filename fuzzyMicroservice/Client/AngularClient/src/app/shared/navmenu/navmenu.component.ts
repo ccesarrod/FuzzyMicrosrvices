@@ -26,7 +26,7 @@ export class NavmenuComponent implements OnInit {
 
    // this.shoppingCartItems = this.cartService.getCart();
     //this.shoppingCartItems.subscribe(p => p);    
-   /*  this.authenticationService.currentUser.subscribe(currentUser =>
+     this.authenticationService.currentUser.subscribe(currentUser =>
     {
       if (currentUser !== null && currentUser.userName !== undefined) {
         const user = currentUser;
@@ -37,7 +37,7 @@ export class NavmenuComponent implements OnInit {
     },
       err => {
         console.log(err);
-      }); */
+      }); 
   }
   toggle() {
     this.isExpanded = !this.isExpanded;

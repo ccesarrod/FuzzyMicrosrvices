@@ -33,7 +33,7 @@ namespace CatalogService
                 options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
             });
 
-           //services.AddScoped<IRepository<Category>, ICategoryRepository>();
+          
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryServiceAPI, CategoryServiceAPI>();

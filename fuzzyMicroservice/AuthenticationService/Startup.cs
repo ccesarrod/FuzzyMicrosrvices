@@ -1,4 +1,7 @@
-﻿using AuthenticationService.DataCore;
+﻿using AuthenticationService.API;
+using AuthenticationService.DataCore;
+using DataCore;
+using DataCore.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +33,12 @@ namespace AuthenticationService
 
             });
 
+            services.AddDbContext<CustomerOrderContext>(options =>           {
+
+              
+                options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
+            });
+
             services.AddIdentity<IdentityUser, IdentityRole>()
               .AddEntityFrameworkStores<IdentityDbContext>()
               .AddDefaultTokenProviders();
@@ -52,6 +61,9 @@ namespace AuthenticationService
                 // User settings
                 options.User.RequireUniqueEmail = true;
             });
+
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

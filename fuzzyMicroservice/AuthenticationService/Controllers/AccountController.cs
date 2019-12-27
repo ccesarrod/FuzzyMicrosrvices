@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AuthenticationService.API;
 using AuthenticationService.DataCore;
 using DataCore.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -16,12 +18,18 @@ namespace AuthenticationService.Controllers
         private readonly AppSettings _appSettings;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        public AccountController(IOptions<AppSettings> appSettings, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        private readonly ICustomerService _customerService;
+        private static readonly object _lock = new object();
+
+        public AccountController(IOptions<AppSettings> appSettings, 
+            SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> 
+            userManager, ICustomerService customerService)
         {
            
             _appSettings = appSettings.Value;
             _signInManager = signInManager;
-            _userManager = userManager;           
+            _userManager = userManager;
+            _customerService = customerService;
         }
 
 
@@ -36,20 +44,75 @@ namespace AuthenticationService.Controllers
             {
                 var user = await _userManager.FindByNameAsync(login.UserName);
 
+             
                 return Ok(new
                 {
                     email = user.Email,
-                    userName = user.UserName,
-                   
+                    userName = user.UserName
+               
                 });
             }
 
             return NotFound();
         }
-        // POST: api/Account
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody]RegisterModel register, string returnUrl = null)
         {
+            returnUrl = returnUrl ?? Url.Content("~/");
+            Customer customer = null;
+
+            if (ModelState.IsValid)
+            {
+                var user = new IdentityUser { UserName = register.UserName, Email = register.Email };
+                var result = await _userManager.CreateAsync(user, register.Password);
+                if (result.Succeeded)
+                {
+                    try
+                    {
+                        var id = GetShortID();
+                        customer = _customerService.AddUser(new Customer { Email = register.Email, ContactName = register.FirstName + "  " + register.LastName, CompanyName = "Company name", CustomerID = id });
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest(ex);
+                    }
+
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+
+                    }
+
+                    return BadRequest(ModelState);
+                }
+               
+            }
+
+            return Ok(new
+            {
+                email = customer.Email
+            });
+
+        }
+
+        /// <summary>
+        /// Return a string of random hexadecimal values which is 6 characters long and relatively unique.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>In testing, result was unique for at least 10,000,000 values obtained in a loop.</remarks>
+        public static string GetShortID()
+        {
+            lock (_lock)
+            {
+                var crypto = new System.Security.Cryptography.RNGCryptoServiceProvider();
+                var bytes = new byte[4];
+                crypto.GetBytes(bytes, 0, 4); // get an array of random bytes.      
+                return BitConverter.ToString(bytes, 0, 4).Replace("-", string.Empty).Substring(0, 5); // convert array to hex values.
+            }
         }
 
         // PUT: api/Account/5

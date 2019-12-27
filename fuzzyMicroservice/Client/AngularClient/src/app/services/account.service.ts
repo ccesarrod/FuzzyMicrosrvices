@@ -12,10 +12,14 @@ export class AccountService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
 
   login(username: string, password: string) {  
-   // this.logout();
+    this.logout();
+   debugger
     if (!localStorage.getItem('currentUser')) {
       return this.http.post<any>(`${environment.apiUrl}/account/login`, { userName: username, password: password })
         .pipe(map(user => {
@@ -46,6 +50,6 @@ export class AccountService {
   }
 
   register(user: User) {
-    return this.http.post<any>(`${environment.apiUrl}account/register`, user);
+    return this.http.post<any>(`${environment.apiUrl}/account/register`, user);
   }
 }
