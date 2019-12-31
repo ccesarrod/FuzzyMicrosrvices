@@ -13,4 +13,9 @@
     <PackageReference Include="Ocelot.Provider.Eureka" Version="13.5.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AuthenticationService\AuthenticationService.csproj" />
+    <ProjectReference Include="..\DataCore\DataCore.csproj" />
+  </ItemGroup>
+
 </Project>

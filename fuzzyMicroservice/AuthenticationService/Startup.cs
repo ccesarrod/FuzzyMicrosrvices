@@ -1,7 +1,9 @@
 ﻿using AuthenticationService.API;
 using AuthenticationService.DataCore;
 using DataCore;
+using DataCore.Entities;
 using DataCore.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Text;
 
 namespace AuthenticationService
 {
@@ -30,11 +34,9 @@ namespace AuthenticationService
             services.AddDbContext<IdentityDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
-
             });
 
-            services.AddDbContext<CustomerOrderContext>(options =>           {
-
+            services.AddDbContext<CustomerOrderContext>(options => {
               
                 options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
             });
@@ -61,6 +63,13 @@ namespace AuthenticationService
                 // User settings
                 options.User.RequireUniqueEmail = true;
             });
+
+            // configure strongly typed settings objects
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
 
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();

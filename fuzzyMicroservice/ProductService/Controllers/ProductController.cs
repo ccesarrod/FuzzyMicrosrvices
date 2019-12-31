@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DataCore.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductService.API;
 
@@ -11,13 +13,14 @@ namespace ProductService.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductServiceAPI _service;
-
+      
         public ProductController(IProductServiceAPI service)
         {
             _service = service;
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<IEnumerable<Product>> Get()
         {
             return _service.GetAll().ToList();

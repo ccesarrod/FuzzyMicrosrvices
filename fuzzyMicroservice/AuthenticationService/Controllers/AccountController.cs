@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AuthenticationService.API;
 using AuthenticationService.DataCore;
@@ -8,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AuthenticationService.Controllers
 {
@@ -43,13 +47,14 @@ namespace AuthenticationService.Controllers
             if (theUser.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(login.UserName);
+                string tokenString = GetToken(user.Email);
 
-             
                 return Ok(new
                 {
                     email = user.Email,
-                    userName = user.UserName
-               
+                    userName = user.UserName,
+                    token = tokenString
+
                 });
             }
 
@@ -125,6 +130,38 @@ namespace AuthenticationService.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        private string GetToken(string email)
+        {
+            String tokenString = "";
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                    new Claim(ClaimTypes.Name, email)
+                    }),
+                    
+                    Issuer = "http://localhost:7000",
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+             
+                tokenString = tokenHandler.WriteToken(token);
+
+                return tokenString;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+            }
+
+            return tokenString;
         }
     }
 }

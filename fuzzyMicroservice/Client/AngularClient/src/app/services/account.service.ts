@@ -19,7 +19,7 @@ export class AccountService {
 
   login(username: string, password: string) {  
     this.logout();
-   debugger
+ 
     if (!localStorage.getItem('currentUser')) {
       return this.http.post<any>(`${environment.apiUrl}/account/login`, { userName: username, password: password })
         .pipe(map(user => {

@@ -1,13 +1,16 @@
 ﻿using DataCore;
+using DataCore.Entities;
 using DataCore.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using ProductService.API;
-
+using System.Text;
 
 namespace ProductService
 {
@@ -34,6 +37,39 @@ namespace ProductService
             //services.AddScoped<IRepository<Category>, ICategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductServiceAPI, ProductServiceAPI>();
+
+            // configure strongly typed settings objects
+            var authenticationProviderKey = "IdentityApiKey";
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var signingKey = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+           
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = false,
+                IssuerSigningKey = new SymmetricSecurityKey(signingKey),
+                ValidateIssuer =false,
+                ValidIssuer = "http://localhost:7000",
+                ValidateAudience = false,            
+                //ValidateLifetime = true,
+               // ClockSkew = TimeSpan.Zero,
+                //RequireExpirationTime = true,
+            };
+
+            services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = "IdentityApiKey";
+                o.DefaultScheme= "IdentityApiKey";
+            })
+            .AddJwtBearer("IdentityApiKey", x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.TokenValidationParameters = tokenValidationParameters;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +86,7 @@ namespace ProductService
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
