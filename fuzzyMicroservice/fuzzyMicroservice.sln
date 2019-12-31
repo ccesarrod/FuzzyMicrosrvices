@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService", "ProductSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuzzyGetway", "FuzzyGetway\FuzzyGetway.csproj", "{BC095792-01E6-4E52-A34B-DE707FCFE9AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService", "AuthenticationService\AuthenticationService.csproj", "{A3099977-78E7-4398-AC09-499206CBA2C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationService", "AuthenticationService\AuthenticationService.csproj", "{A3099977-78E7-4398-AC09-499206CBA2C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartService", "CartService\CartService.csproj", "{AB685B0A-61EA-4FDB-BB24-3AF864E84E79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A3099977-78E7-4398-AC09-499206CBA2C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3099977-78E7-4398-AC09-499206CBA2C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3099977-78E7-4398-AC09-499206CBA2C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB685B0A-61EA-4FDB-BB24-3AF864E84E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB685B0A-61EA-4FDB-BB24-3AF864E84E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB685B0A-61EA-4FDB-BB24-3AF864E84E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB685B0A-61EA-4FDB-BB24-3AF864E84E79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
