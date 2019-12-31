@@ -1,0 +1,66 @@
+
+<div class="container">
+    <div class="d-flex flex-row mt-5 pb-5 mb-5  border bg-dark text-white">
+      <h1 class="ml-3 mt-3">
+        Northwind shopping cart
+     
+      </h1>
+      <div class="d-flex flex-column mt-5  left-button">
+        <button class="btn  btn-info" (click)="saveCart()">Save Cart</button>
+      </div>
+    </div>
+      <div class="d-flex flex-row">
+        <table class="table table-bordered">
+          <!-- header -->
+          <tr class="well">
+            <td><b>Item</b></td>
+            <td><b>Quantity</b></td>
+            <td><b>Price</b></td>
+            
+          </tr>
+          <!-- empty cart message -->
+          <tr >
+            <td class="text-center" colspan="4" *ngIf="cart.length == 0">
+              Your cart is empty.
+            </td>
+          </tr>
+          <!-- cart items -->
+          <tr  *ngFor="let item of cart" >
+            <td>{{item.name}}</td>
+            <td class="tdCenter">
+              <div class="input-append">
+                <!-- use type=tel instead of to prevent spinners -->
+                <input class="col-xs-offset-3 text-center" type="number" value="{{item.quantity}}"/>
+                <button class="btn btn-success" type="button" (click)="addQuantity(item)">
+                  +
+                </button>
+                <button class="btn btn-danger" type="button" (click)="removeItem(item)">
+                  -
+                </button>
+  
+              </div>
+            </td>
+            <td class="tdRight">{{item.price * item.quantity | currency}}</td>
+            <td class="tdCenter" title="remove from cart">
+              <button type="button" class="btn btn-link" (click)="removeItem(item)" >
+              <i class="icon-remove">Remove</i>
+  
+              </button>
+  
+            </td>
+  
+          </tr>
+          <!-- footer -->
+          <tr class="well">
+            <td><b>Total</b></td>
+            <td class="tdCenter"><b>{{totalCount}}</b></td>
+            <td class="tdRight"><b>{{totalPrice}}</b></td>
+        
+  
+          </tr>
+        </table>
+  
+      </div>
+     
+   </div>
+  

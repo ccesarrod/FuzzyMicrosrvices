@@ -9,6 +9,7 @@ import { ProductModule } from '@modules/product/product.module';
 import { HomeComponent } from '@modules/home/home.component';
 import { AccountModule } from '@modules/account/account.module';
 import { JwtInterceptor} from './services/jwtInterceptor';
+import {CartService } from './services/cart.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { JwtInterceptor} from './services/jwtInterceptor';
     ProductModule,
     AccountModule
   ],
-  providers: [ { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
+  providers: [CartService,
+             { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

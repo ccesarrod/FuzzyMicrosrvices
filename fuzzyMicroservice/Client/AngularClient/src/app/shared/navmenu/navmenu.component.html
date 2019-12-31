@@ -22,19 +22,18 @@
             <span class='glyphicon glyphicon-education'></span> Categories
           </a>
         </li>
-        <li [routerLinkActive]='["link-active"]' class="nav-item active">
-          <a [routerLink]='["/fetch-data"]' (click)='collapse()' class="nav-link bg-ligth">
-            <span class='glyphicon glyphicon-th-list'></span> Fetch data
-          </a>
-        </li>
+        
         <li [routerLinkActive]='["link-active"]' class="nav-item active">
           <a [routerLink]='["/products"]' (click)='collapse()' class="nav-link">
             <span class='glyphicon glyphicon-th-list'></span> Products
           </a>
         </li>
-        <!-- <li [routerLinkActive]='["link-active"]' class="nav-item active">
-          <a [routerLink]='["/cart"]' id="lastVal" class="pl-5 float-right"><img src="../../assets/glyphicons-203-shopping-cart.png" class="bg-info rounded" />{{(shoppingCartItems | async).length}}</a>
-        </li> -->
+         <li [routerLinkActive]='["link-active"]' class="nav-item active">
+          <a [routerLink]='["/cart"]' id="lastVal" class="pl-5
+           float-right">
+           <img src="../../assets/glyphicons-203-shopping-cart.png"
+            class="bg-info rounded" />{{(shoppingCartItems | async).length}}</a>
+        </li> 
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">          

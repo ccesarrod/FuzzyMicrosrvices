@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AccountService } from '@services/account.service';
-
+import {ICartItem} from '@models/cartItem-model'
+import { CartService } from '@services/cart.service';
 @Component({
   selector: 'app-navmenu',
   templateUrl: './navmenu.component.html',
@@ -11,12 +12,14 @@ import { AccountService } from '@services/account.service';
 export class NavmenuComponent implements OnInit {
 
   isExpanded = false;
-  shoppingCartItems: [];
+  shoppingCartItems: Observable<ICartItem[]>;
   userName: string = "";
   loginAction: string = "Login";
   isLogin: boolean = false;
 
-  constructor( private router:Router, private authenticationService:AccountService) {}
+  constructor( private router:Router, 
+    private authenticationService:AccountService,
+    private cartService:CartService) {}
 
   collapse() {
     this.isExpanded = false;
@@ -24,8 +27,8 @@ export class NavmenuComponent implements OnInit {
 
   ngOnInit() {
 
-   // this.shoppingCartItems = this.cartService.getCart();
-    //this.shoppingCartItems.subscribe(p => p);    
+    this.shoppingCartItems = this.cartService.getCart();
+    this.shoppingCartItems.subscribe(p => p);    
      this.authenticationService.currentUser.subscribe(currentUser =>
     {
       if (currentUser !== null && currentUser.userName !== undefined) {
@@ -49,7 +52,7 @@ export class NavmenuComponent implements OnInit {
       this.isLogin = false;
       this.loginAction = 'Login';
       this.userName = '';
-     // this.cartService.clearCart();
+      this.cartService.clearCart();
       this.router.navigate(['/']);
     }
     else {
