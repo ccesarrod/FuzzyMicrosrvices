@@ -39,7 +39,7 @@ namespace ProductService
             services.AddScoped<IProductServiceAPI, ProductServiceAPI>();
 
             // configure strongly typed settings objects
-            var authenticationProviderKey = "IdentityApiKey";
+            var  authenticationProviderKey= "IdentityApiKey";
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
@@ -55,17 +55,15 @@ namespace ProductService
                 ValidateIssuer =false,
                 ValidIssuer = "http://localhost:7000",
                 ValidateAudience = false,            
-                //ValidateLifetime = true,
-               // ClockSkew = TimeSpan.Zero,
-                //RequireExpirationTime = true,
+                
             };
 
             services.AddAuthentication(o =>
             {
-                o.DefaultAuthenticateScheme = "IdentityApiKey";
-                o.DefaultScheme= "IdentityApiKey";
+                o.DefaultAuthenticateScheme = authenticationProviderKey;
+                o.DefaultScheme= authenticationProviderKey;
             })
-            .AddJwtBearer("IdentityApiKey", x =>
+            .AddJwtBearer(authenticationProviderKey, x =>
             {
                 x.RequireHttpsMetadata = false;
                 x.TokenValidationParameters = tokenValidationParameters;

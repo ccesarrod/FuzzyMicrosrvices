@@ -1,6 +1,22 @@
 {
   "ReRoutes": [
     {
+      "DownstreamPathTemplate": "/api/cart",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7004
+        }
+      ],
+      "UpstreamPathTemplate": "/api/cart",
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/account/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -11,7 +27,7 @@
       ],
       "UpstreamPathTemplate": "/api/account/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET" ]
-      
+
     },
     {
       "DownstreamPathTemplate": "/api/product",

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AuthenticationService\AuthenticationService.csproj" />
     <ProjectReference Include="..\DataCore\DataCore.csproj" />
   </ItemGroup>
 
