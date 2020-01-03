@@ -3,6 +3,7 @@ using AuthenticationService.DataCore;
 using DataCore;
 using DataCore.Entities;
 using DataCore.Repositories;
+using DataCore.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -73,6 +74,7 @@ namespace AuthenticationService
 
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
