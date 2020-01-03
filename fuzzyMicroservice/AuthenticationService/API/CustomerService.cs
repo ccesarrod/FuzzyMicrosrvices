@@ -12,11 +12,15 @@ namespace AuthenticationService.API
     {
         private ICustomerRepository _customerRepository;
         private readonly IProductRepository _productRepository;
+        private readonly ICartDetailsRepository _cartDetailsRepository;
 
-        public CustomerService(ICustomerRepository context, IProductRepository product)
+        public CustomerService(ICustomerRepository context, 
+                                    IProductRepository product,
+                                    ICartDetailsRepository cartDetailsRepository)
         {
             _customerRepository = context;
             _productRepository = product;
+            _cartDetailsRepository = cartDetailsRepository;
         }
         public Customer AddUser(Customer user)
         {
@@ -80,13 +84,10 @@ namespace AuthenticationService.API
                     customer.Cart = new List<CartDetails>();
                 }
 
-                //var cartList = _cartDetailsRepository.Find(x => x.CustomerID == customer.CustomerID).ToList();
+                var cartList = customer.Cart;
 
-                customer.Cart.Clear();
-                _customerRepository.Update(customer);
-                _customerRepository.Save();
-
-                //customer.Cart.RemoveAll(x => x.CustomerID != null);
+                cartList.ForEach(m => _cartDetailsRepository.Delete(m));
+                _cartDetailsRepository.Save();                
 
                 foreach (var item in cartUpdates)
                 {
@@ -116,8 +117,7 @@ namespace AuthenticationService.API
         {
 
             var customer = getByEmail(userEmail);
-            var cart = customer.Cart.ToList();
-            //customer.Cart = cart.Any() ? cart : new List<CartDetails>();
+            var cart = customer.Cart.ToList();           
             return cart;
         }
     }

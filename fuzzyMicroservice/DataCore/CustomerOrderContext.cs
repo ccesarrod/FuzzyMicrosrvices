@@ -25,6 +25,11 @@ namespace DataCore
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        //.UseSqlServer(this.Database.GetDbConnection().ConnectionString);
+        }
 
         public new void Dispose()
         {
