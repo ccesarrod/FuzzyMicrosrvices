@@ -40,6 +40,7 @@ namespace AuthenticationService
             services.AddDbContext<CustomerOrderContext>(options => {
               
                 options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
+                options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Northwind"));
             });
 
             services.AddIdentity<IdentityUser, IdentityRole>()

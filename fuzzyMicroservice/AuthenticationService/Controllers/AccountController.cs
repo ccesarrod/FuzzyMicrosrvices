@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using AuthenticationService.API;
+﻿using AuthenticationService.API;
 using AuthenticationService.DataCore;
 using DataCore.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +6,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
+using DataCore.Models;
 
 namespace AuthenticationService.Controllers
 {
@@ -47,14 +48,16 @@ namespace AuthenticationService.Controllers
             if (theUser.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(login.UserName);
+                var currentCart = _customerService.GetShoopingCart(user.Email);
+                var list = currentCart.Select(i => new Cart() { Id = i.Id, Quantity = i.Quantity, Price = i.Price, ProductId = i.ProductId });
                 string tokenString = GetToken(user.Email);
 
                 return Ok(new
                 {
                     email = user.Email,
                     userName = user.UserName,
-                    token = tokenString
-
+                    token = tokenString,
+                    cart = list
                 });
             }
 

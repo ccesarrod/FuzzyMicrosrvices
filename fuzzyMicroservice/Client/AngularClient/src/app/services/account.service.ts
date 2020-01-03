@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '@models/user-model';
 import { environment } from 'src/environments/environment';
+import { CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AccountService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cartService:CartService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -29,7 +30,7 @@ export class AccountService {
             localStorage.setItem('currentUser', JSON.stringify(user));
            
             this.currentUserSubject.next(user);
-           // this.cartService.assignCart(user.cart);
+            this.cartService.assignCart(user.cart);
           }
           return user;
         }));

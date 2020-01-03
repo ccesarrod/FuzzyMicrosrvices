@@ -30,7 +30,7 @@ namespace AuthenticationService.API
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
                 return null;
 
-            var user = _customerRepository.GetAll().SingleOrDefault(x => x.Email == email);
+            var user = getByEmail(email);
 
 
             if (user == null)
@@ -42,15 +42,14 @@ namespace AuthenticationService.API
 
         public Customer getByEmail(string email)
         {
-            return _customerRepository.Find(x => x.Email == email).SingleOrDefault();
+           return _customerRepository.SearchFor(x => x.Email == email).SingleOrDefault();
+         
         }
 
         public Customer GetById(string id)
         {
             return _customerRepository.Find(x => x.CustomerID == id).SingleOrDefault();
-        }
-
-       
+        }  
 
        
 
@@ -111,6 +110,15 @@ namespace AuthenticationService.API
             _customerRepository.Update(customer);
             _customerRepository.Save();
             return customer.Cart;
+        }
+
+        public List<CartDetails> GetShoopingCart(string userEmail)
+        {
+
+            var customer = getByEmail(userEmail);
+            var cart = customer.Cart.ToList();
+            //customer.Cart = cart.Any() ? cart : new List<CartDetails>();
+            return cart;
         }
     }
 }

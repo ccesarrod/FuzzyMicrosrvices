@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataCore.Entities
 {
@@ -17,7 +18,9 @@ namespace DataCore.Entities
         public short? ReorderLevel { get; set; }
         public bool Discontinued { get; set; }
 
-        // public  Category Category { get; set; }
+        public  virtual Category Category { get; set; }
+
+        public virtual List<CartDetails> Cart { get; set; }
 
 
     }

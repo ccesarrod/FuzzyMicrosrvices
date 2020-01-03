@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace DataCore
 {
@@ -34,6 +35,8 @@ namespace DataCore
         {
 
             return Set.Where(expresion).AsQueryable();
+
+            
         }
 
         public void Delete(TEntity entity)
@@ -107,6 +110,10 @@ namespace DataCore
             }
         }
 
+        public IQueryable<TEntity> SearchFor(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Set.Where(predicate);
+        }
     }
 }
 
