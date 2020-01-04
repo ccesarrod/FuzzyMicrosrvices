@@ -10,11 +10,15 @@ import { HomeComponent } from '@modules/home/home.component';
 import { AccountModule } from '@modules/account/account.module';
 import { JwtInterceptor} from './services/jwtInterceptor';
 import {CartService } from './services/cart.service';
+import { AppToastService } from '@services/app-toast.service';
+import { AppToastComponent } from './shared/app-toast/app-toast.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
     NavmenuComponent,
-    HomeComponent
+    HomeComponent,
+    AppToastComponent
   ],
   imports: [
     BrowserModule,
@@ -22,10 +26,12 @@ import {CartService } from './services/cart.service';
     AppRoutingModule,
     CategoryModule,
     ProductModule,
-    AccountModule
+    AccountModule,
+    NgbModule
   ],
   providers: [CartService,
-             { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
+             { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+             AppToastService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

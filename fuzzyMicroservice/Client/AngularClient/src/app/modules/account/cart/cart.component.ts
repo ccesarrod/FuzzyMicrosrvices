@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '@services/cart.service';
 import { ICartItem } from '@models/cartItem-model';
 import { AccountService } from '@services/account.service';
+import { AppToastService } from '@services/app-toast.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +13,8 @@ export class CartComponent implements OnInit {
 
   public cart:any;
   constructor(private cartService: CartService,
-    private authService: AccountService) { }
+    private authService: AccountService,
+    private toastService: AppToastService) { }
 
  
 
@@ -35,6 +37,7 @@ export class CartComponent implements OnInit {
     this.cartService.save().subscribe(x => {
 
       this.authService.currentUserValue.cart = this.cart;
+      this.toastService.show('Cart updated')
 
     });
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AccountService } from '@services/account.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AppToastService } from '@services/app-toast.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private loginService: AccountService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private toastService: AppToastService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -40,6 +42,7 @@ export class LoginComponent implements OnInit {
         data => {
           if (data) {         
             this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+            this.toastService.show("login")
             this.router.navigate([this.returnUrl]);
           }
 
