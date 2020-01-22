@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using AuthenticationService.API;
 using DataCore.Entities;
 using DataCore.Models;
@@ -38,14 +37,7 @@ namespace CartService.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        private Customer GetAutenticatedCustomer()
+         private Customer GetAutenticatedCustomer()
         {
 
             return User.Identity.IsAuthenticated ? GetCustomerByEmail() : new Customer();
