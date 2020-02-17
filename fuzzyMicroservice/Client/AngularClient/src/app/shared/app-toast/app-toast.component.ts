@@ -5,7 +5,7 @@ import { AppToastService } from '@services/app-toast.service';
   selector: 'app-app-toast',
   templateUrl: './app-toast.component.html',
   styleUrls: ['./app-toast.component.scss'],
-  host: {'[class.ngb-toasts]': 'true'}
+
 })
 export class AppToastComponent implements OnInit {
 

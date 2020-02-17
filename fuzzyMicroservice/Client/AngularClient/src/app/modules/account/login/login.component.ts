@@ -42,13 +42,14 @@ export class LoginComponent implements OnInit {
         data => {
           if (data) {         
             this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-            this.toastService.show("login")
+            this.toastService.show("login",{ classname: 'bg-success text-light', delay: 1000 })
             this.router.navigate([this.returnUrl]);
           }
 
         },
         error => {
           console.error(error);
+          this.toastService.show("login failed",{ classname: 'bg-danger text-light', delay:2000 })
           this.loading = false;
         });
   }

@@ -37,7 +37,8 @@ export class CartComponent implements OnInit {
     this.cartService.save().subscribe(x => {
 
       this.authService.currentUserValue.cart = this.cart;
-      this.toastService.show('Cart updated')
+      this.toastService.show('Cart updated',{ classname: 'bg-success text-light', delay: 3000 })
+      
 
     });
   }

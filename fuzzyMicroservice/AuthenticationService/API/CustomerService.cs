@@ -67,7 +67,7 @@ namespace AuthenticationService.API
             var customer = getByEmail(userEmail);
 
 
-            if (customer == null || !cartUpdates.Any()) return customer.Cart;
+            if (customer == null) return customer.Cart;
 
             if (customer != null && customer.Cart == null)
             {

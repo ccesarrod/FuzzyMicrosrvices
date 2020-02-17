@@ -96,10 +96,9 @@ export class CartService {
     }
   }
 
-  save() {
-    
-     if (this.cart.length > 0) {
-    return this.httpclient.post<any>(`${environment.apiUrl}/cart`, this.cart);
+  save() {    
+     if (this.cart.length >= 0) {
+      return this.httpclient.post<any>(`${environment.apiUrl}/cart`, this.cart);
       }
   }
 
