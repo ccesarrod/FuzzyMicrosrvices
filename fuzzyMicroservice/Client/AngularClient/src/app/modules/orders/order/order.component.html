@@ -1,1 +1,57 @@
-<p>order works!</p>
+
+<h2>Orders Details</h2>
+
+Checkout
+<div class="flex">
+<div class="text-center">
+    <table class="table table-bordered">
+        <tr class="well">
+
+            <td class="tdCenter"><b>Total Quantity: </b></td>
+            <td class="tdRight"><b>Amount: </b></td>
+            <td src="~/images/glyphicons-237-zoom-in.png" class="img-thumbnail bg-info"></td>
+            <!-- <td ng-controller="ModalSummaryCtrl"><img src="~/images/glyphicons-237-zoom-in.png" class="img-thumbnail bg-info" ng-click="open('sm')" /></td> -->
+        </tr>
+    </table>
+    <div class="row">
+        <ul class="list-inline">
+            <li class="list-group-item"> <a href="#/Customer">Shipping Details</a></li>
+            <li class="list-group-item"><a href="#/Payment">Payment methods</a></li>
+
+        </ul>
+
+
+    </div>
+
+</div>
+<!-- <div class="row" ng-controller="orderController">
+    <div ng-view></div>
+
+</div> -->
+
+<div>
+   
+        <div class="modal-header">
+            <h3 class="modal-title"></h3>
+        </div>
+        <!-- <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a ng-click="selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div> -->
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    
+
+   
+</div>
+
+</div>
+
+
+

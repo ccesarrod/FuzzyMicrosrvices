@@ -3,6 +3,7 @@ import { CartService } from '@services/cart.service';
 import { ICartItem } from '@models/cartItem-model';
 import { AccountService } from '@services/account.service';
 import { AppToastService } from '@services/app-toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +15,8 @@ export class CartComponent implements OnInit {
   public cart:any;
   constructor(private cartService: CartService,
     private authService: AccountService,
-    private toastService: AppToastService) { }
+    private toastService: AppToastService,
+    public router:Router) { }
 
  
 
