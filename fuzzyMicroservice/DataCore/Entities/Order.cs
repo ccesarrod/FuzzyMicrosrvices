@@ -8,13 +8,13 @@ namespace DataCore.Entities
     {
         public Order()
         {
-            this.Order_Details = new List<OrderDetail>();
+          //  this.Order_Details = new List<OrderDetail>();
         }
 
         public int OrderID { get; set; }
         public string CustomerID { get; set; }
 
-        public Nullable<DateTime> OrderDate { get; set; }
+        public DateTime? OrderDate { get; set; }
         public Nullable<DateTime> RequiredDate { get; set; }
         public Nullable<DateTime> ShippedDate { get; set; }
         public Nullable<decimal> Freight { get; set; }
@@ -25,7 +25,7 @@ namespace DataCore.Entities
         public string ShipPostalCode { get; set; }
         public string ShipCountry { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual ICollection<OrderDetail> Order_Details { get; set; }
+       // public virtual ICollection<OrderDetail> Order_Details { get; set; }
 
     }
 }
