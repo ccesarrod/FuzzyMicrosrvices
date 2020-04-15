@@ -42,7 +42,8 @@ namespace OrderServer.Controllers
         [HttpPost]
         public ActionResult<Order> Post([FromBody] Order value)
         {
-            var order = _orderAPI.AddOrder(value);
+            //var order = _orderAPI.AddOrder(value);
+            var order = value;
             return Ok(order);
         }
 

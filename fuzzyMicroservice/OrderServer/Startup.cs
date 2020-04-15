@@ -39,35 +39,7 @@ namespace OrderServer
             services.AddScoped<IOrderAPI, OrderAPI>();
 
             // configure strongly typed settings objects
-            var authenticationProviderKey = "IdentityApiKey";
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-
-            // configure jwt authentication
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var signingKey = Encoding.ASCII.GetBytes(appSettings.Secret);
-
-
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = false,
-                IssuerSigningKey = new SymmetricSecurityKey(signingKey),
-                ValidateIssuer = false,
-                ValidIssuer = "http://localhost:7000",
-                ValidateAudience = false,
-
-            };
-
-            services.AddAuthentication(o =>
-            {
-                o.DefaultAuthenticateScheme = authenticationProviderKey;
-                o.DefaultScheme = authenticationProviderKey;
-            })
-            .AddJwtBearer(authenticationProviderKey, x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.TokenValidationParameters = tokenValidationParameters;
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
