@@ -1,4 +1,5 @@
 ﻿using DataCore.Entities;
+using OrderService.Models;
 using System.Collections.Generic;
 
 namespace OrderService.API
@@ -8,7 +9,7 @@ namespace OrderService.API
 
         Order GetById(int id);
 
-        Order AddOrder(Order order);
+        OrderViewModel AddOrder(OrderViewModel order, string customerEmail);
 
 
         List<OrderDetail> GetOrderDetails(string OrderId);

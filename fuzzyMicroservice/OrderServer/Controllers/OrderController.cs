@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using AuthenticationService.API;
 using DataCore.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OrderService.API;
+using OrderService.Models;
 
 namespace OrderServer.Controllers
 {
@@ -13,10 +13,11 @@ namespace OrderServer.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderAPI _orderAPI;
-
+     
         public OrderController(IOrderAPI orderAPI)
         {
             _orderAPI = orderAPI;
+           
         }
         // GET api/values
         [HttpGet]
@@ -27,6 +28,7 @@ namespace OrderServer.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+      
         public ActionResult<Order> Get(int id)
         {
             var order= _orderAPI.GetById(id);
@@ -40,10 +42,12 @@ namespace OrderServer.Controllers
 
         // POST api/values
         [HttpPost]
-        public ActionResult<Order> Post([FromBody] Order value)
+        [Authorize]
+        public ActionResult<OrderViewModel> Post([FromBody] OrderViewModel value)
         {
-            //var order = _orderAPI.AddOrder(value);
-            var order = value;
+            
+                var order = _orderAPI.AddOrder(value, User.Identity.Name);
+            //var order = value;
             return Ok(order);
         }
 
@@ -58,5 +62,7 @@ namespace OrderServer.Controllers
         public void Delete(int id)
         {
         }
+
+        
     }
 }

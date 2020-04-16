@@ -25,7 +25,7 @@ namespace DataCore.Entities
         public string ShipPostalCode { get; set; }
         public string ShipCountry { get; set; }
         public virtual Customer Customer { get; set; }
-       // public virtual ICollection<OrderDetail> Order_Details { get; set; }
+        public virtual ICollection<OrderDetail> Order_Details { get; set; }
 
     }
 }

@@ -30,7 +30,7 @@
 
     },
     {
-      "DownstreamPathTemplate": "/api/order/{everything}",
+      "DownstreamPathTemplate": "/api/order",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -38,9 +38,12 @@
           "Port": 7005
         }
       ],
-      "UpstreamPathTemplate": "/api/order/{everything}",
-      "UpstreamHttpMethod": [ "POST", "GET" ]
-
+      "UpstreamPathTemplate": "/api/order",
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/order",
@@ -52,8 +55,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/order",
-      "UpstreamHttpMethod": [ "POST", "GET" ]
-
+      "UpstreamHttpMethod": [  "GET" ]
     },
     {
       "DownstreamPathTemplate": "/api/product",

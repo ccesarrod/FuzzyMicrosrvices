@@ -21,8 +21,7 @@ export class OrderNewComponent implements OnInit {
 
 
   ngOnInit() {
-    this.cartService.getCart().subscribe(data => {
-      debugger
+    this.cartService.getCart().subscribe(data => {    
       this.cart = data;
     });
     this.newOrderForm = new FormGroup({
@@ -46,13 +45,14 @@ export class OrderNewComponent implements OnInit {
       ShipRegion: raw.state,
       ShipCountry: raw.country,
       ShipPostalCode : raw.zipcode,
-      cardnumber: raw.cardnumber,
+     /*  cardnumber: raw.cardnumber,
       cardexpiration: raw.expirationdate,
       expiration: raw.expirationdate,
       cardsecuritynumber: raw.cardsecuritynumber,
       cardholdername: raw.cardholdername,
       cardtypeid: raw.cardtypeid,
-      total: this.cartService.totalPrice()
+      total: this.cartService.totalPrice(),      */
+      Order_Detail:this.cart
     };
 
     this.orderService.saveOrder(order).subscribe(x => {

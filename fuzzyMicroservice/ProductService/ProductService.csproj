@@ -15,8 +15,4 @@
     <ProjectReference Include="..\DataCore\DataCore.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DataCore\" />
-  </ItemGroup>
-
 </Project>

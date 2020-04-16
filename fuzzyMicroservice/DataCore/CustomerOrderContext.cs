@@ -21,6 +21,7 @@ namespace DataCore
             modelBuilder.Entity<Customer>().ToTable("Customers");
             modelBuilder.Entity<CartDetails>().ToTable("Cart");
             modelBuilder.Entity<Order>().ToTable("Orders");
+            modelBuilder.Entity<OrderDetail>().ToTable("Order Details");
             base.OnModelCreating(modelBuilder);
 
         }
