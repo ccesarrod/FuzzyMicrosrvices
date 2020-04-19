@@ -120,5 +120,19 @@ namespace AuthenticationService.API
             var cart = customer.Cart.ToList();           
             return cart;
         }
+
+        public List<CartDetails> DeleteShoppingCart(Customer customer)
+        {
+            if (customer.Cart.Count > 0)
+            {
+                _cartDetailsRepository.DeleteRage(customer.Cart);
+
+                _cartDetailsRepository.Save();
+            }           
+           
+            return customer.Cart;
+        }
+
+        
     }
 }

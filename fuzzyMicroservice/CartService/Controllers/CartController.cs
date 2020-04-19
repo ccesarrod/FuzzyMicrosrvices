@@ -37,7 +37,22 @@ namespace CartService.Controllers
             return NotFound();
         }
 
-         private Customer GetAutenticatedCustomer()
+
+        [HttpDelete]
+        [Authorize]
+        public ActionResult Delete()
+        {
+            if (HttpContext.User.Identities.Any())
+            {
+                var customer = GetAutenticatedCustomer();
+                _customerService.DeleteShoppingCart(customer);
+                return Ok();
+            }
+
+            return NotFound("customer not found");
+        }
+
+        private Customer GetAutenticatedCustomer()
         {
 
             return User.Identity.IsAuthenticated ? GetCustomerByEmail() : new Customer();

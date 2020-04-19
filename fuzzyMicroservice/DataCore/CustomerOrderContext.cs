@@ -1,4 +1,5 @@
-﻿using DataCore.Entities;
+﻿using DataCore.data_maps;
+using DataCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataCore
@@ -21,7 +22,8 @@ namespace DataCore
             modelBuilder.Entity<Customer>().ToTable("Customers");
             modelBuilder.Entity<CartDetails>().ToTable("Cart");
             modelBuilder.Entity<Order>().ToTable("Orders");
-            modelBuilder.Entity<OrderDetail>().ToTable("Order Details");
+          // modelBuilder.Entity<OrderDetail>().ToTable("Order Details");
+            modelBuilder.ApplyConfiguration(new Order_DetailMap());
             base.OnModelCreating(modelBuilder);
 
         }

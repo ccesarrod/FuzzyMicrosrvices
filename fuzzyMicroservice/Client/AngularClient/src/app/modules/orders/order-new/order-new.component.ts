@@ -4,6 +4,7 @@ import { CartService } from '@services/cart.service';
 import { ICartItem } from '@models/cartItem-model';
 import { IOrder } from '@models/order';
 import { OrderService } from '@services/order.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-new',
@@ -16,7 +17,9 @@ export class OrderNewComponent implements OnInit {
   errorReceived: boolean;
   cart: ICartItem[];
 
-  constructor(private cartService: CartService, private orderService: OrderService) { }
+  constructor(private cartService: CartService, 
+        private orderService: OrderService,
+        private router:Router) { }
 
 
 
@@ -28,11 +31,11 @@ export class OrderNewComponent implements OnInit {
       street: new FormControl({ value: '', disabled: true }, [Validators.required]),
       city: new FormControl({ value: '', disabled: true }, [Validators.required]),
       state: new FormControl({ value: '', disabled: true }, [Validators.required]),
-      country: new FormControl({ value: '', disabled: true }, [Validators.required]),
-      cardnumber: new FormControl({ value: '', disabled: true }, [Validators.required]),
+      country: new FormControl({ value: '', disabled: true }, [Validators.required])
+      /* cardnumber: new FormControl({ value: '', disabled: true }, [Validators.required]),
       cardholdername: new FormControl({ value: '', disabled: true }, [Validators.required]),
       expirationdate: new FormControl({ value: '', disabled: true }, [Validators.required]),
-      securitycode: new FormControl({ value: '', disabled: true }, [Validators.required])
+      securitycode: new FormControl({ value: '', disabled: true }, [Validators.required]) */
     });
     this.newOrderForm.enable();
   }
@@ -56,7 +59,9 @@ export class OrderNewComponent implements OnInit {
     };
 
     this.orderService.saveOrder(order).subscribe(x => {
-      console.log(x);
+      this.cartService.emptyCart().subscribe(y=>{
+      this.router.navigate(['order-complete']);
+      })
     })
 
   }

@@ -13,6 +13,8 @@ namespace AuthenticationService.API
 
         Customer getByEmail(string email);
 
+        List<CartDetails> DeleteShoppingCart(Customer customer);
+
         List<CartDetails> SyncShoppingCart(string userEmail, List<Cart> cartUpdates);
         List<CartDetails> GetShoopingCart(string userEmail);
     }

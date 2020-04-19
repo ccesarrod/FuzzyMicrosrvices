@@ -97,7 +97,7 @@ export class CartService {
   }
 
   save() {    
-     if (this.cart.length >= 0) {
+     if (this.cart) {
       return this.httpclient.post<any>(`${environment.apiUrl}/cart`, this.cart);
       }
   }
@@ -109,6 +109,11 @@ export class CartService {
 
   clearCart() {
     this.cart = [];
-    this.itemsInCartSubject.next([...this.cart]);
+    this.itemsInCartSubject.next([...this.cart]);   
+  }
+
+  emptyCart(){
+    this.clearCart()
+    return this.httpclient.delete(`${environment.apiUrl}/cart`);
   }
 }

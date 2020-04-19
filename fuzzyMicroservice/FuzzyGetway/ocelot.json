@@ -10,7 +10,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/cart",
-      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamHttpMethod": [ "POST","DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityApiKey",
         "AllowedScopes": []
