@@ -1,10 +1,11 @@
 ﻿using System.Linq;
-using AuthenticationService.API;
+
 using DataCore.Entities;
 using DataCore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ServicesAPI.CustomerAPI;
 
 namespace CartService.Controllers
 {

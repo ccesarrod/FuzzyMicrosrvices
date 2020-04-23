@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using AuthenticationService.API;
+
 using DataCore;
 using DataCore.Entities;
 using DataCore.Repositories;
@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using ServicesAPI.CustomerAPI;
 
 namespace CartService
 {

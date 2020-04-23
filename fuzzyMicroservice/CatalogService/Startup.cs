@@ -1,6 +1,5 @@
-﻿using CatalogService.API;
-using CatalogService.DataCore;
-using DataCore;
+﻿using DataCore;
+using DataCore.Repositories;
 using DataCore.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ServicesAPI.CategoryAPI;
 
 namespace CatalogService
 {

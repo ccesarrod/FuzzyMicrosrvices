@@ -1,7 +1,6 @@
-﻿
-using CatalogService.API;
-using DataCore.Entities;
+﻿using DataCore.Entities;
 using Microsoft.AspNetCore.Mvc;
+using ServicesAPI.CategoryAPI;
 using System.Collections.Generic;
 
 namespace CatalogService.Controllers

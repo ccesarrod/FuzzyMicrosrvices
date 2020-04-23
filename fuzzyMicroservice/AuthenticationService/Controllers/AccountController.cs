@@ -1,4 +1,4 @@
-﻿using AuthenticationService.API;
+﻿
 using AuthenticationService.DataCore;
 using DataCore.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using DataCore.Models;
+using ServicesAPI.CustomerAPI;
 
 namespace AuthenticationService.Controllers
 {

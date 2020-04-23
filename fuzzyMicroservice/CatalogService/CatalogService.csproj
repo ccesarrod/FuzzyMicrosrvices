@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataCore\DataCore.csproj" />
+    <ProjectReference Include="..\ServicesAPI\ServicesAPI.csproj" />
   </ItemGroup>
 
 </Project>

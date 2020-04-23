@@ -3,7 +3,7 @@ using System.Linq;
 using DataCore.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProductService.API;
+using ServicesAPI.ProductAPI;
 
 namespace ProductService.Controllers
 {

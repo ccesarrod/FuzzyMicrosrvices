@@ -1,4 +1,4 @@
-﻿using AuthenticationService.API;
+﻿
 using DataCore;
 using DataCore.Entities;
 using DataCore.Repositories;
@@ -10,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using OrderService.API;
+
+using ServicesAPI.CustomerAPI;
+using ServicesAPI.OrderAPI;
 using System.Text;
 
 namespace OrderServer

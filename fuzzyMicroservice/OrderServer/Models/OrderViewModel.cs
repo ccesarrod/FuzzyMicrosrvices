@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace OrderService.Models
+﻿namespace OrderService.Models
 {
     public class OrderViewModel
     {
+        public OrderViewModel()
+        {
+            Order_Detail = new OrderDetailView[] { };
+        }
         public int Id { get; set; }
         public string ShipName { get; set; }
         public string ShipAddress { get; set; }

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using AuthenticationService.API;
+using System.Linq;
 using DataCore.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OrderService.API;
 using OrderService.Models;
+using ServicesAPI.OrderAPI;
 
 namespace OrderServer.Controllers
 {
@@ -45,10 +45,9 @@ namespace OrderServer.Controllers
         [Authorize]
         public ActionResult<OrderViewModel> Post([FromBody] OrderViewModel value)
         {
-            
-                var order = _orderAPI.AddOrder(value, User.Identity.Name);
-            //var order = value;
-            return Ok(order);
+            var mapToOrder = MapToOrder(value);
+            Order order = _orderAPI.AddOrder(mapToOrder, User.Identity.Name);           
+            return Ok(MapToOrderViewModel(order));
         }
 
         // PUT api/values/5
@@ -63,6 +62,43 @@ namespace OrderServer.Controllers
         {
         }
 
-        
+        private Order MapToOrder(OrderViewModel orderModel)
+        {
+            return new Order
+            {
+                ShipAddress = orderModel.ShipAddress,
+                ShipCity = orderModel.ShipCity,
+                ShipCountry = orderModel.ShipCountry,
+                ShipName = orderModel.ShipName,
+                ShipPostalCode = orderModel.ShipPostalCode,
+                ShipRegion = orderModel.ShipRegion,
+                Order_Details = MapToOrderDetail(orderModel.Order_Detail)
+            };
+        }
+
+        private OrderViewModel MapToOrderViewModel(Order orderModel)
+        {
+            return new OrderViewModel
+            {
+                ShipAddress = orderModel.ShipAddress,
+                ShipCity = orderModel.ShipCity,
+                ShipCountry = orderModel.ShipCountry,
+                ShipName = orderModel.ShipName,
+                ShipPostalCode = orderModel.ShipPostalCode,
+                ShipRegion = orderModel.ShipRegion               
+            };
+        }
+
+        private ICollection<OrderDetail> MapToOrderDetail(OrderDetailView[] order_Detail)
+        {
+            var list = new List<OrderDetail>();
+
+            order_Detail.ToList().ForEach(x => {
+
+                list.Add(new OrderDetail { ProductID = x.id, Quantity = x.quantity, UnitPrice = x.price });
+            });
+
+            return list;
+        }
     }
 }
