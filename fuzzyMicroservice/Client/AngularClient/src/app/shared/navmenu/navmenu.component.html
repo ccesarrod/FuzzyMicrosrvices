@@ -44,7 +44,7 @@
             <span class='glyphicon glyphicon-login'></span> {{loginAction}}
           </a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item active" *ngIf="loginAction === 'Login'">
           <a [routerLink]='["/register"]' (click)='collapse()' class="nav-link">
             <span class='glyphicon glyphicon-login'></span> Register
           </a>

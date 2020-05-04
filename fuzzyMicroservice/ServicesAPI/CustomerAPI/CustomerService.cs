@@ -84,10 +84,11 @@ namespace ServicesAPI.CustomerAPI
                     customer.Cart = new List<CartDetails>();
                 }
 
-                var cartList = customer.Cart;
+                // var cartList = customer.Cart;
+                customer.Cart.Clear();
 
-                cartList.ForEach(m => _cartDetailsRepository.Delete(m));
-                _cartDetailsRepository.Save();                
+                //cartList.ForEach(m => _cartDetailsRepository.Delete(m));
+                //_cartDetailsRepository.Save();                
 
                 foreach (var item in cartUpdates)
                 {

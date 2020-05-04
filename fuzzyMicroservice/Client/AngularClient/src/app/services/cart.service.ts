@@ -9,9 +9,7 @@ import { environment } from "../../environments/environment";
 
 @Injectable()
 export class CartService {
-  private itemsInCartSubject: BehaviorSubject<
-    ICartItem[]
-  > = new BehaviorSubject([]);
+  private itemsInCartSubject: BehaviorSubject<ICartItem[]> = new BehaviorSubject([]);
   private cart: ICartItem[] = [];
 
   constructor(private httpclient: HttpClient) {
@@ -53,6 +51,7 @@ export class CartService {
   }
 
   getCart(): Subject<ICartItem[]> {
+    
     if (this.itemsInCartSubject != null)
       this.itemsInCartSubject.next(this.cart);
 
