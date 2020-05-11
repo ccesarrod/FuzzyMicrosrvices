@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartService", "CartService\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService", "OrderServer\OrderService.csproj", "{04A89BE1-B26F-4789-932C-22C530D6FB9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicesAPI", "ServicesAPI\ServicesAPI.csproj", "{6A578439-7F4A-4141-A485-0B827380561C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicesAPI", "ServicesAPI\ServicesAPI.csproj", "{6A578439-7F4A-4141-A485-0B827380561C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

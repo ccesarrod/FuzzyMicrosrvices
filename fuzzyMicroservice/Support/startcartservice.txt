@@ -1,0 +1,3 @@
+
+cd ..\cartservice
+dotnet run --verbosity m --launch-profile cartservice --no-build
