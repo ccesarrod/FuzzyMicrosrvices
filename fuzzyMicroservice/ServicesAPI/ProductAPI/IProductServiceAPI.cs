@@ -6,5 +6,6 @@ namespace ServicesAPI.ProductAPI
     public  interface IProductServiceAPI
     {
        IEnumerable<Product> GetAll();
+        bool UpdateQuantity (int ProductId, int quantity);
     }
 }

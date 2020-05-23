@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DataCore.Entities;
+using EventCore.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OrderService.Events;
 using OrderService.Models;
 using ServicesAPI.OrderAPI;
 
@@ -13,11 +15,12 @@ namespace OrderServer.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderAPI _orderAPI;
-     
-        public OrderController(IOrderAPI orderAPI)
+        private readonly IEventPublisher _eventPublisher;
+
+        public OrderController(IOrderAPI orderAPI, IEventPublisher eventPublisher)
         {
             _orderAPI = orderAPI;
-           
+            _eventPublisher = eventPublisher;
         }
         // GET api/values
         [HttpGet]
@@ -46,7 +49,10 @@ namespace OrderServer.Controllers
         public ActionResult<OrderViewModel> Post([FromBody] OrderViewModel value)
         {
             var mapToOrder = MapToOrder(value);
-            Order order = _orderAPI.AddOrder(mapToOrder, User.Identity.Name);           
+            Order order = _orderAPI.AddOrder(mapToOrder, User.Identity.Name);
+            var order_event = new NewOrderStartedEvent() { OrderId = order.OrderID, Order_Detail = value.Order_Detail };     
+            
+            _eventPublisher.Publish(order_event);
             return Ok(MapToOrderViewModel(order));
         }
 
