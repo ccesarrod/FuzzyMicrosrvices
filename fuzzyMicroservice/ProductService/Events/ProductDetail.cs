@@ -9,7 +9,7 @@ namespace ProductService.Events
     public class OrderStartedIntegrationEvent : IntegrationEvent
     {
       public  int OrderId { get; set; }
-      public  OrderDetail[] Details { get; set; }
+      public  OrderDetail[] Order_Detail { get; set; }
     }
 
     public class OrderDetail

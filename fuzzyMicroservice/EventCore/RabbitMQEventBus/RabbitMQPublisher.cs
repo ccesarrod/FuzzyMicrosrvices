@@ -32,6 +32,9 @@ namespace EventCore.RabbitMQEventBus
                
                 channel.QueueDeclare(queue: eventName, durable: false, exclusive: false, autoDelete: false, arguments: null);
 
+                channel.QueueBind(queue: eventName,
+                             exchange: eventName,
+                             routingKey: "");
                 var json = JsonConvert.SerializeObject(@event);
                 var body = Encoding.UTF8.GetBytes(json);
 

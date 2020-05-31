@@ -40,7 +40,7 @@ namespace AuthenticationService.Controllers
 
 
         [AllowAnonymous]
-        [HttpPost("login")]
+       [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]Login login)
         {
             var theUser = await _signInManager.PasswordSignInAsync(login.UserName, login.Password, false, lockoutOnFailure: false);

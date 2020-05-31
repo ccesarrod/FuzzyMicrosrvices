@@ -11,7 +11,7 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
-    let url = `${environment.apiUrl}/product`;
+    let url = `${environment.apiUrl}/product/getAll`;
      return this.http.get<Product[]>(url);
   }
 

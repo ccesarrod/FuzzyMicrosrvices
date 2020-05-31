@@ -86,7 +86,7 @@ namespace OrderServer
             //Configure service bus
             //  services.Configure<RabbitMqConfiguration>(Configuration.GetSection("RabbitMq"));
             // services.Configure<IRabbitMQPersistentConnection>(Configuration.GetSection("RabbitMq"));
-            var test = Configuration["EventBusConnection"];
+            
             services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
             {
                       

@@ -94,13 +94,16 @@ namespace ServicesAPI.CustomerAPI
                 {
                     var cartItem = customer.Cart.SingleOrDefault(x => x.ProductId == item.Id);
                     if (cartItem == null)
-                        customer.Cart.Add(new CartDetails
+                        customer.Cart.Add (new CartDetails
                         {
+                            CustomerID = customer.CustomerID,
+                            Customer = customer,
                             Price = item.Price,
                             Quantity = item.Quantity,
                             ProductId = item.Id,
                             Product = GetProductById(item.Id)
-                        });
+                        }); 
+                    
 
                     else
 
@@ -109,8 +112,9 @@ namespace ServicesAPI.CustomerAPI
             }
 
 
-            _customerRepository.Update(customer);
-            _customerRepository.Save();
+              _customerRepository.Update(customer);
+        
+           _customerRepository.Save();
             return customer.Cart;
         }
 

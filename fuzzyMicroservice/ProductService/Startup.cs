@@ -1,6 +1,8 @@
-﻿using DataCore;
+﻿using Consul;
+using DataCore;
 using DataCore.Entities;
 using DataCore.Repository;
+using EventCore.RabbitMQEventBus;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +10,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using ProductService.Events.EventHandlers;
+using RabbitMQ.Client;
 using ServicesAPI.ProductAPI;
+using System;
 using System.Text;
 
 namespace ProductService
@@ -67,7 +72,60 @@ namespace ProductService
                 x.RequireHttpsMetadata = false;
                 x.TokenValidationParameters = tokenValidationParameters;
             });
+
+
+
+            // Event bus settings
+            services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
+            {
+
+
+                var factory = new ConnectionFactory()
+                {
+                    HostName = Configuration["EventBusConnection"],
+                    DispatchConsumersAsync = true
+                };
+
+                if (!string.IsNullOrEmpty(Configuration["EventBusUserName"]))
+                {
+                    factory.UserName = Configuration["EventBusUserName"];
+                }
+
+                if (!string.IsNullOrEmpty(Configuration["EventBusPassword"]))
+                {
+                    factory.Password = Configuration["EventBusPassword"];
+                }
+
+                var retryCount = 5;
+                if (!string.IsNullOrEmpty(Configuration["EventBusRetryCount"]))
+                {
+                    retryCount = int.Parse(Configuration["EventBusRetryCount"]);
+                }
+
+              
+
+                return new DefaultRabbitMQPersistentConnection(factory, retryCount);
+            });
+
+            //var rabbitMQPersistentConnection = ser.GetRequiredService<IRabbitMQPersistentConnection>();
+            
+            services.AddHostedService<NewOrderCreatedEventHandler>();
+            services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
+            {
+                //consul address  
+                var address = "http://127.0.0.1:8500";
+
+                consulConfig.Address = new Uri(address);
+
+            }, null, handlerOverride =>
+            {
+                //disable proxy of httpclienthandler  
+                handlerOverride.Proxy = null;
+                handlerOverride.UseProxy = false;
+            }));
+
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -85,6 +143,32 @@ namespace ProductService
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
+            RegisterWithConsul(app);
+        }
+
+        private static void RegisterWithConsul(IApplicationBuilder app)
+        {
+            // Retrieve Consul client from DI
+            var consulClient = app.ApplicationServices
+                                .GetRequiredService<IConsulClient>();
+
+
+            // Register service with consul
+            var uri = new Uri("http://localhost");
+            var registration = new AgentServiceRegistration()
+            {
+                ID = "productService", //$"{consulConfig.Value.ServiceID}-{uri.Port}",
+                Name = "productService",//consulConfig.Value.ServiceName,
+                Address = "localhost",
+                Port = 7002,//uri.Port,
+                Tags = new[] { "product" }
+            };
+
+            // logger.LogInformation("Registering with Consul");
+            consulClient.Agent.ServiceDeregister(registration.ID).Wait();
+            consulClient.Agent.ServiceRegister(registration).Wait();
+
+
         }
     }
 }

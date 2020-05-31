@@ -20,7 +20,7 @@ namespace CartService.Controllers
             _customerService = customerAPI;
         }
 
-        [HttpPost]
+        [HttpPost("savecart")]
         [Authorize]
         public ActionResult Save(Cart[] cartView)
         {
@@ -39,7 +39,7 @@ namespace CartService.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpDelete("delete")]
         [Authorize]
         public ActionResult Delete()
         {

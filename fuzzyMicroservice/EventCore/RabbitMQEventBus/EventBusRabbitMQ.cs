@@ -241,7 +241,7 @@ namespace EventCore.RabbitMQEventBus
                 //    throw new InvalidOperationException($"Fake exception requested: \"{message}\"");
                 //}
 
-                //await ProcessEvent(eventName, message);
+               //await ProcessEvent(eventName, message);
             }
             catch (Exception ex)
             {

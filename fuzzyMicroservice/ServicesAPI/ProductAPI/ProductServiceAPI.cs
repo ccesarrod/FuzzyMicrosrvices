@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DataCore.Entities;
 using DataCore.Repository;
@@ -22,6 +23,7 @@ namespace ServicesAPI.ProductAPI
         {
             var updateSuccess = false;
             var product = _repository.Find(x => x.ProductID == productId).Single();
+            if (product.UnitsInStock == 0) throw new OutStockException($"{product.ProductName}  is out stock with id {product.ProductID}" );
             short inventory =(short) (product.UnitsInStock.Value - quantity);
             if ( inventory < product.ReorderLevel)
             {

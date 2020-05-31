@@ -8,6 +8,6 @@ export class OrderService {
     constructor(private httpclient: HttpClient) {}
 
     saveOrder(order:IOrder) {
-        return this.httpclient.post<any>(`${environment.apiUrl}/order`,order);
+        return this.httpclient.post<any>(`${environment.apiUrl}/order/addorder`,order);
     }
 }

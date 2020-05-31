@@ -18,9 +18,10 @@ namespace ProductService.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult<IEnumerable<Product>> Get()
+        
+        [HttpGet("getall")]
+       [Authorize]
+        public ActionResult<IEnumerable<Product>> GetAll()
         {
             return _service.GetAll().ToList();
         }

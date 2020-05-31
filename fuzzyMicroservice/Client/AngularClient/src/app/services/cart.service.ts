@@ -97,7 +97,7 @@ export class CartService {
 
   save() {    
      if (this.cart) {
-      return this.httpclient.post<any>(`${environment.apiUrl}/cart`, this.cart);
+      return this.httpclient.post<any>(`${environment.apiUrl}/cart/savecart`, this.cart);
       }
   }
 
@@ -113,6 +113,6 @@ export class CartService {
 
   emptyCart(){
     this.clearCart()
-    return this.httpclient.delete(`${environment.apiUrl}/cart`);
+    return this.httpclient.delete(`${environment.apiUrl}/cart/delete`);
   }
 }

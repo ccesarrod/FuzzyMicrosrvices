@@ -22,8 +22,7 @@ namespace ServicesAPI.OrderAPI
         {
             var customer = _customerService.getByEmail(customerEmail);          
             order.CustomerID = customer.CustomerID;
-            order.Customer = customer;
-
+            order.Customer = customer;            
             _orderRepository.Add(order);
             _orderRepository.Save();           
             return order;

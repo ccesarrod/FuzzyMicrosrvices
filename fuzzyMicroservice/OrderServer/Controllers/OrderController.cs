@@ -44,9 +44,9 @@ namespace OrderServer.Controllers
         }
 
         // POST api/values
-        [HttpPost]
+        [HttpPost("addorder")]
         [Authorize]
-        public ActionResult<OrderViewModel> Post([FromBody] OrderViewModel value)
+        public ActionResult<OrderViewModel> AddOrder([FromBody] OrderViewModel value)
         {
             var mapToOrder = MapToOrder(value);
             Order order = _orderAPI.AddOrder(mapToOrder, User.Identity.Name);
