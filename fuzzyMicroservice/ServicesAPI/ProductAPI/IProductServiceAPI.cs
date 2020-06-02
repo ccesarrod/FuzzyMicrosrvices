@@ -1,11 +1,12 @@
 ﻿using DataCore.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ServicesAPI.ProductAPI
 {
     public  interface IProductServiceAPI
     {
-       IEnumerable<Product> GetAll();
+       Task<ICollection<Product>> GetAll();
         bool UpdateQuantity (int ProductId, int quantity);
     }
 }

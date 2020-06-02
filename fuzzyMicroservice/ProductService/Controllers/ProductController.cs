@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DataCore.Entities;
+﻿using System;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServicesAPI.ProductAPI;
 
@@ -20,10 +21,20 @@ namespace ProductService.Controllers
 
         
         [HttpGet("getall")]
-       [Authorize]
-        public ActionResult<IEnumerable<Product>> GetAll()
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetAll()
         {
-            return _service.GetAll().ToList();
+            try
+            {
+                var resuk = await _service.GetAll();
+                return Ok(resuk);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DataCore.Entities;
 using DataCore.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace ServicesAPI.ProductAPI
 {
@@ -14,9 +16,9 @@ namespace ServicesAPI.ProductAPI
         {
             this._repository = repository;
         }
-        public IEnumerable<Product> GetAll()
+        public async Task<ICollection<Product>> GetAll()
         {
-            return _repository.GetAll();
+            return await _repository.GetAll().ToListAsync(); ;
         }
 
         public bool  UpdateQuantity(int productId, int quantity)

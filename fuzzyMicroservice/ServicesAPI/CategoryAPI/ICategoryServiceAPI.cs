@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DataCore.Entities;
 
 namespace ServicesAPI.CategoryAPI
@@ -6,8 +7,8 @@ namespace ServicesAPI.CategoryAPI
 {
     public interface ICategoryServiceAPI
     {
-        List<Category> GetAll();
+        Task<ICollection<Category>> GetAll();
         Category GetCategoryById(int categoryId);
-        List<Product> ProductsByCategoryId(int categoryId);
+        ICollection<Product> ProductsByCategoryId(int categoryId);
     }
 }

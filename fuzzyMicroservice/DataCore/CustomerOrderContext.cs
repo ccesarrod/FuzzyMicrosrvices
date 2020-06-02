@@ -21,8 +21,7 @@ namespace DataCore
             modelBuilder.Entity<Category>().ToTable("Categories");
             modelBuilder.Entity<Customer>().ToTable("Customers");
             modelBuilder.Entity<CartDetails>().ToTable("Cart");
-            modelBuilder.Entity<Order>().ToTable("Orders");
-          // modelBuilder.Entity<OrderDetail>().ToTable("Order Details");
+            modelBuilder.Entity<Order>().ToTable("Orders");         
             modelBuilder.ApplyConfiguration(new Order_DetailMap());
             base.OnModelCreating(modelBuilder);
 
@@ -31,7 +30,7 @@ namespace DataCore
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-        //.UseSqlServer(this.Database.GetDbConnection().ConnectionString);
+        /
         }
 
         public new void Dispose()
