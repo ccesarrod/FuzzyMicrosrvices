@@ -89,6 +89,8 @@ namespace CartService
             app.UseAuthentication();
            
             app.UseRouting();
+            app.UseAuthorization();
+
             app.UseHttpsRedirection();
             app.UseEndpoints(endpoints =>
             {

@@ -1,4 +1,5 @@
-﻿using DataCore.data_maps;
+﻿using DataCore.Configurations;
+using DataCore.data_maps;
 using DataCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,13 @@ namespace DataCore
             modelBuilder.Entity<Product>().ToTable("Products");
             modelBuilder.Entity<Category>().ToTable("Categories");
             modelBuilder.Entity<Customer>().ToTable("Customers");
-            modelBuilder.Entity<CartDetails>().ToTable("Cart");
+            modelBuilder.Entity<Customer>()
+                .HasMany(t => t.Cart)
+                .WithOne(c => c.Customer)
+                .HasForeignKey(c => c.CustomerID);
+            //modelBuilder.Entity<CartDetails>().HasKey(t => t.Id);
+            //modelBuilder.Entity<CartDetails>().ToTable("Cart");
+            modelBuilder.ApplyConfiguration(new CartConfiguration());
             modelBuilder.Entity<Order>().ToTable("Orders");         
             modelBuilder.ApplyConfiguration(new Order_DetailMap());
             base.OnModelCreating(modelBuilder);
@@ -30,7 +37,7 @@ namespace DataCore
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-        /
+        
         }
 
         public new void Dispose()

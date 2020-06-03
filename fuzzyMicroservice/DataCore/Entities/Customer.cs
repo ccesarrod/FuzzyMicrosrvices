@@ -24,5 +24,6 @@ namespace DataCore.Entities
         public string Fax { get; set; }
 
         public virtual List<CartDetails> Cart { get; set; }
+        public virtual List<Order> Orders { get; set; }
     }
 }
