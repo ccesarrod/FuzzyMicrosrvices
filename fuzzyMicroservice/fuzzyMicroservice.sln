@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService", "CatalogSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCore", "DataCore\DataCore.csproj", "{C35C2DB2-2B80-4A2A-BCB6-82B25F976B01}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCategory", "TestCategory\TestCategory.csproj", "{04A3B767-80B0-4B4B-B4C8-4722E33E2A7B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService", "ProductService\ProductService.csproj", "{ED095E11-E637-47A5-9912-BE28040BCBFB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuzzyGetway", "FuzzyGetway\FuzzyGetway.csproj", "{BC095792-01E6-4E52-A34B-DE707FCFE9AC}"
@@ -23,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicesAPI", "ServicesAPI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventCore", "EventCore\EventCore.csproj", "{881CE954-865A-48B1-AD19-F8D07B7D4485}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerService", "CustomerService\CustomerService.csproj", "{7D5238DC-04BA-4840-98C0-E1C44AEDCB1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerService", "CustomerService\CustomerService.csproj", "{7D5238DC-04BA-4840-98C0-E1C44AEDCB1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +37,6 @@ Global
 		{C35C2DB2-2B80-4A2A-BCB6-82B25F976B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C35C2DB2-2B80-4A2A-BCB6-82B25F976B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C35C2DB2-2B80-4A2A-BCB6-82B25F976B01}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04A3B767-80B0-4B4B-B4C8-4722E33E2A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04A3B767-80B0-4B4B-B4C8-4722E33E2A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04A3B767-80B0-4B4B-B4C8-4722E33E2A7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04A3B767-80B0-4B4B-B4C8-4722E33E2A7B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED095E11-E637-47A5-9912-BE28040BCBFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED095E11-E637-47A5-9912-BE28040BCBFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED095E11-E637-47A5-9912-BE28040BCBFB}.Release|Any CPU.ActiveCfg = Release|Any CPU

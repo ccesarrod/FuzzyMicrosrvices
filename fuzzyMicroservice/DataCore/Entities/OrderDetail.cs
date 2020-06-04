@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataCore.Entities
 {
@@ -9,7 +10,7 @@ namespace DataCore.Entities
    
         public int ProductID { get; set; }
         public decimal UnitPrice { get; set; }
-        public int Quantity { get; set; }
+        public short Quantity { get; set; }
         public float Discount { get; set; }
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }

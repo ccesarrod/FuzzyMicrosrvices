@@ -1,17 +1,49 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/cart/{everything}",
+      "DownstreamPathTemplate": "/api/catalog/all",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 7001
+      //  }
+      //],
+      "UpstreamPathTemplate": "/api/catalog",
+      "UpstreamHttpMethod": [ "Get" ],
+      "RequestIdKey": "OcRequestId",
+      "ServiceName": "catalogService",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+
+    },
+    {
+      "DownstreamPathTemplate": "/api/catalog/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7004
+          "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/api/cart/{everything}",
-      "UpstreamHttpMethod": [ "POST", "DELETE" ],
+      "UpstreamPathTemplate": "/api/catalog/{id}",
+      "UpstreamHttpMethod": [ "Get" ]
+
+    },
+    {
+      "DownstreamPathTemplate": "/api/product/getall",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/product/{everything}",
+      "UpstreamHttpMethod": [ "Get" ],
       "RequestIdKey": "OcRequestId",
+
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityApiKey",
         "AllowedScopes": []
@@ -28,6 +60,24 @@
       ],
       "UpstreamPathTemplate": "/api/account/{everything}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET" ]
+    },
+    {
+
+      "DownstreamPathTemplate": "/api/cart/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7004
+        }
+      ],
+      "UpstreamPathTemplate": "/api/cart/{everything}",
+      "UpstreamHttpMethod": [ "POST", "DELETE" ],
+      "RequestIdKey": "OcRequestId",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/order/addorder",
@@ -63,54 +113,19 @@
 
     },
     {
-      "DownstreamPathTemplate": "/api/product/getall",
+      "DownstreamPathTemplate": "/api/customer/getcustomerbyemail",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7002
+          "Port": 7006
         }
       ],
-      "UpstreamPathTemplate": "/api/product/{everything}",
-      "UpstreamHttpMethod": [ "Get" ],
-      "RequestIdKey": "OcRequestId",  
-      
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IdentityApiKey",
-        "AllowedScopes": []
-      }
-    },
-    {
-      "DownstreamPathTemplate": "/api/catalog/all",
-      "DownstreamScheme": "http",
-      //"DownstreamHostAndPorts": [
-      //  {
-      //    "Host": "localhost",
-      //    "Port": 7001
-      //  }
-      //],
-      "UpstreamPathTemplate": "/api/catalog",
-      "UpstreamHttpMethod": [ "Get" ],
-      "RequestIdKey": "OcRequestId",
-      "ServiceName": "catalogService",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
-
-    },
-    {
-      "DownstreamPathTemplate": "/api/catalog/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7001
-        }
-      ],
-      "UpstreamPathTemplate": "/api/catalog/{id}",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamPathTemplate": "/api/customer/getcustomerbyemail",
+      "UpstreamHttpMethod": [ "GET" ]
 
     }
+
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:7000",

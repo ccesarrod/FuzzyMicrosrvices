@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DataCore.Entities;
 using DataCore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ namespace CustomerService.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
-        CustomerController(ICustomerService customerAPI)
+        public CustomerController(ICustomerService customerAPI)
         {
             _customerService = customerAPI;
         }
@@ -38,10 +39,19 @@ namespace CustomerService.Controllers
             return NotFound();
         }
         // GET: api/<CustomerController>
-        [HttpGet]
-        public IEnumerable<string> GetAutheti()
+        [HttpGet("getcustomerbyemail")]
+        public ActionResult<Customer> GetCustomerByEmail()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var customer = _customerService.getByEmail("test2@yahoo.com");
+                return Ok(customer);
+            }
+            catch
+            {
+                return NotFound();
+            }
+            
         }
 
         // GET api/<CustomerController>/5

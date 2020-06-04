@@ -101,7 +101,7 @@ namespace OrderServer.Controllers
 
             order_Detail.ToList().ForEach(x => {
 
-                list.Add(new OrderDetail { ProductID = x.id, Quantity = x.quantity, UnitPrice = x.price });
+                list.Add(new OrderDetail { ProductID = x.id, Quantity = (short)x.quantity, UnitPrice = x.price });
             });
 
             return list;

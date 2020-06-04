@@ -7,6 +7,7 @@ namespace DataCore.Entities
         public Customer()
         {
             Cart = new List<CartDetails>();
+            Orders = new List<Order>();
 
         }
         public string CustomerID { get; set; }
@@ -23,7 +24,7 @@ namespace DataCore.Entities
         public string Phone { get; set; }
         public string Fax { get; set; }
 
-        public virtual List<CartDetails> Cart { get; set; }
-        public virtual List<Order> Orders { get; set; }
+        public virtual ICollection<CartDetails> Cart { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

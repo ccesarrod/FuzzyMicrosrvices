@@ -96,7 +96,7 @@ namespace CartService
             {
                 endpoints.MapControllers();
             });
-            // app.UseMvc();
+           
 
         }
     }

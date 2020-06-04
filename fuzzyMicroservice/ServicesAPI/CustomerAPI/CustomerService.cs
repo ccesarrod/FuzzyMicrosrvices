@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DataCore.Entities;
 using DataCore.Models;
@@ -67,12 +66,12 @@ namespace ServicesAPI.CustomerAPI
             var customer = getByEmail(userEmail);
 
 
-            if (customer == null) return customer.Cart;
+            if (customer == null) return customer.Cart.ToList();
 
             if (customer != null && customer.Cart == null)
             {
                 customer.Cart = cartUpdates.Select(
-                    x => new CartDetails { Price = x.Price, Quantity = x.Quantity, ProductId = x.Id, Product = GetProductById(x.Id) })
+                    x => new CartDetails { Price = x.Price, Quantity = x.Quantity, ProductId = x.Id })
                     .ToList();
                 _customerRepository.Update(customer);
                 _customerRepository.Save();
@@ -100,8 +99,8 @@ namespace ServicesAPI.CustomerAPI
                             Customer = customer,
                             Price = item.Price,
                             Quantity = item.Quantity,
-                            ProductId = item.Id,
-                            Product = GetProductById(item.Id)
+                            ProductId = item.Id
+                           // Product = GetProductById(item.Id)
                         }); 
                     
 
@@ -115,7 +114,7 @@ namespace ServicesAPI.CustomerAPI
               _customerRepository.Update(customer);
         
            _customerRepository.Save();
-            return customer.Cart;
+            return customer.Cart.ToList();
         }
 
         public List<CartDetails> GetShoopingCart(string userEmail)
@@ -135,7 +134,7 @@ namespace ServicesAPI.CustomerAPI
                 _cartDetailsRepository.Save();
             }           
            
-            return customer.Cart;
+            return customer.Cart.ToList();
         }
 
         
