@@ -1,3 +1,4 @@
+using Consul;
 using DataCore;
 using DataCore.Repositories;
 using DataCore.Repository;
@@ -7,7 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ServiceDiscovery;
 using ServicesAPI.CustomerAPI;
+using System;
 
 namespace CustomerService
 {
@@ -38,6 +41,21 @@ namespace CustomerService
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICartDetailsRepository, CartDetailsRepository>();
+            services.Configure<ServiceDiscoveryConfiguration>(Configuration.GetSection("consulConfig"));
+
+            services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
+            {
+                //consul address  
+                var address = "http://127.0.0.1:8500";
+
+                consulConfig.Address = new Uri(address);
+
+            }, null, handlerOverride =>
+            {
+                //disable proxy of httpclienthandler  
+                handlerOverride.Proxy = null;
+                handlerOverride.UseProxy = false;
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +76,7 @@ namespace CustomerService
             {
                 endpoints.MapControllers();
             });
+            app.UseConsul(Configuration);
         }
     }
 }

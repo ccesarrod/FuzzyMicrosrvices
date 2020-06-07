@@ -27,9 +27,7 @@ namespace CatalogService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //services.AddMvc();
-            //.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+           
             services.AddDbContext<CustomerOrderContext>(options =>
             {
                 
@@ -76,12 +74,9 @@ namespace CatalogService
             {
                 endpoints.MapControllers();
             });
-            //app.UseMvc(routes => {
-            //    routes.MapRoute(name: "default",
-            //        template:"api/{controller}/{action}/{id?}");
-            //});
+            
 
-            RegisterWithConsul(app);
+           // RegisterWithConsul(app);
         }
 
         private static void RegisterWithConsul(IApplicationBuilder app)

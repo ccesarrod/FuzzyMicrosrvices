@@ -1,4 +1,5 @@
 ﻿
+using Consul;
 using DataCore;
 using DataCore.Entities;
 using DataCore.Repositories;
@@ -15,8 +16,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using OrderService.Events;
 using RabbitMQ.Client;
+using ServiceDiscovery;
 using ServicesAPI.CustomerAPI;
 using ServicesAPI.OrderAPI;
+using System;
 using System.Text;
 
 namespace OrderServer
@@ -117,6 +120,21 @@ namespace OrderServer
             });
 
             RegisterEventBus(services);
+            services.Configure<ServiceDiscoveryConfiguration>(Configuration.GetSection("consulConfig"));
+
+            services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
+            {
+                //consul address  
+                var address = "http://127.0.0.1:8500";
+
+                consulConfig.Address = new Uri(address);
+
+            }, null, handlerOverride =>
+            {
+                //disable proxy of httpclienthandler  
+                handlerOverride.Proxy = null;
+                handlerOverride.UseProxy = false;
+            }));
 
         }
 
@@ -142,7 +160,7 @@ namespace OrderServer
                 endpoints.MapControllers();
             });
 
-            //  ConfigureEventBus(app);
+            app.UseConsul(Configuration);
 
         }
 

@@ -5,7 +5,7 @@ using DataCore.Repository;
 using EventCore.RabbitMQEventBus;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using ServiceDiscovery;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -78,8 +78,7 @@ namespace ProductService
 
 
             // Event bus settings
-            services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
-            {
+            services.AddSingleton<IRabbitMQPersistentConnection>(sp =>           {
 
 
                 var factory = new ConnectionFactory()
@@ -102,9 +101,7 @@ namespace ProductService
                 if (!string.IsNullOrEmpty(Configuration["EventBusRetryCount"]))
                 {
                     retryCount = int.Parse(Configuration["EventBusRetryCount"]);
-                }
-
-              
+                }              
 
                 return new DefaultRabbitMQPersistentConnection(factory, retryCount);
             });
@@ -112,6 +109,8 @@ namespace ProductService
             //var rabbitMQPersistentConnection = ser.GetRequiredService<IRabbitMQPersistentConnection>();
             
             services.AddHostedService<NewOrderCreatedEventHandler>();
+            services.Configure<ServiceDiscoveryConfiguration>(Configuration.GetSection("consulConfig"));
+           
             services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
             {
                 //consul address  
@@ -150,7 +149,10 @@ namespace ProductService
             {
                 endpoints.MapControllers();
             });
-            RegisterWithConsul(app);
+            //   RegisterWithConsul(app);
+            var consulConfig = new ServiceDiscoveryConfiguration();
+            Configuration.GetSection("consulConfig").Bind(consulConfig);
+            app.UseConsul(Configuration);
         }
 
         private static void RegisterWithConsul(IApplicationBuilder app)

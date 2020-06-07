@@ -1,4 +1,5 @@
 ﻿using AuthenticationService.DataCore;
+using Consul;
 using DataCore;
 using DataCore.Entities;
 using DataCore.Repositories;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ServiceDiscovery;
 using ServicesAPI.CustomerAPI;
 using System;
 
@@ -76,6 +78,21 @@ namespace AuthenticationService
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICartDetailsRepository, CartDetailsRepository>();
+
+            services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
+            {
+                //consul address  
+                var address = "http://127.0.0.1:8500";
+
+                consulConfig.Address = new Uri(address);
+
+            }, null, handlerOverride =>
+            {
+                //disable proxy of httpclienthandler  
+                handlerOverride.Proxy = null;
+                handlerOverride.UseProxy = false;
+            }));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,7 +116,9 @@ namespace AuthenticationService
             {
                 endpoints.MapControllers();
             });
-            //  app.UseMvc();
+            var consulConfig = new ServiceDiscoveryConfiguration();
+            Configuration.GetSection("consulConfig").Bind(consulConfig);
+            app.UseConsul(Configuration);
         }
     }
 }

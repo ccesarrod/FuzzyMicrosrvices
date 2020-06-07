@@ -1,17 +1,18 @@
-﻿using System.Text;
-
+﻿using System;
+using System.Text;
+using Consul;
 using DataCore;
 using DataCore.Entities;
 using DataCore.Repositories;
 using DataCore.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using ServiceDiscovery;
 using ServicesAPI.CustomerAPI;
 
 namespace CartService
@@ -70,6 +71,22 @@ namespace CartService
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICartDetailsRepository, CartDetailsRepository>();
+
+            services.Configure<ServiceDiscoveryConfiguration>(Configuration.GetSection("consulConfig"));
+
+            services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
+            {
+                //consul address  
+                var address = "http://127.0.0.1:8500";
+
+                consulConfig.Address = new Uri(address);
+
+            }, null, handlerOverride =>
+            {
+                //disable proxy of httpclienthandler  
+                handlerOverride.Proxy = null;
+                handlerOverride.UseProxy = false;
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,7 +101,7 @@ namespace CartService
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseConsul(Configuration);
             app.UseHttpsRedirection();
             app.UseAuthentication();
            

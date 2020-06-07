@@ -8,6 +8,7 @@
 
   <ItemGroup>    
     <PackageReference Include="Consul" Version="0.7.2.6" />    
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />    
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />    
     <PackageReference Include="Ocelot" Version="16.0.1" />
     <PackageReference Include="Ocelot.Cache.CacheManager" Version="16.0.1" />
@@ -17,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AuthenticationService\AuthenticationService.csproj" />
     <ProjectReference Include="..\DataCore\DataCore.csproj" />
+    <ProjectReference Include="..\ServiceDiscovery\ServiceDiscovery.csproj" />
   </ItemGroup>
 
 </Project>

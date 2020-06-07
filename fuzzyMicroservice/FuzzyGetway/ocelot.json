@@ -16,34 +16,39 @@
       "LoadBalancerOptions": {
         "Type": "LeastConnection"
       }
-
     },
     {
       "DownstreamPathTemplate": "/api/catalog/{id}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7001
-        }
-      ],
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 7001
+      //  }
+      //],
       "UpstreamPathTemplate": "/api/catalog/{id}",
-      "UpstreamHttpMethod": [ "Get" ]
-
+      "UpstreamHttpMethod": [ "Get" ],
+      "ServiceName": "catalogService",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/product/getall",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7002
-        }
-      ],
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 7002
+      //  }
+      //],
       "UpstreamPathTemplate": "/api/product/{everything}",
       "UpstreamHttpMethod": [ "Get" ],
       "RequestIdKey": "OcRequestId",
-
+      "ServiceName": "productService",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityApiKey",
         "AllowedScopes": []
@@ -52,28 +57,36 @@
     {
       "DownstreamPathTemplate": "/api/account/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7003
-        }
-      ],
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 7003
+      //  }
+      //],
       "UpstreamPathTemplate": "/api/account/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET" ]
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET" ],
+      "ServiceName": "accountService",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
     },
     {
 
       "DownstreamPathTemplate": "/api/cart/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7004
-        }
-      ],
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 7004
+      //  }
+      //],
       "UpstreamPathTemplate": "/api/cart/{everything}",
       "UpstreamHttpMethod": [ "POST", "DELETE" ],
       "RequestIdKey": "OcRequestId",
+      "ServiceName": "cartService",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityApiKey",
         "AllowedScopes": []
@@ -82,15 +95,16 @@
     {
       "DownstreamPathTemplate": "/api/order/addorder",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7005
-        }
-      ],
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 7005
+      //  }
+      //],
       "UpstreamPathTemplate": "/api/order/{everything}",
       "UpstreamHttpMethod": [ "POST" ],
       "RequestIdKey": "OcRequestId",
+      "ServiceName": "orderService",
       "LoadBalancerOptions": {
         "Type": "LeastConnection"
       },
@@ -102,28 +116,34 @@
     {
       "DownstreamPathTemplate": "/api/order",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7005
-        }
-      ],
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 7005
+      //  }
+      //],
       "UpstreamPathTemplate": "/api/order",
-      "UpstreamHttpMethod": [ "GET" ]
-
+      "UpstreamHttpMethod": [ "GET" ],
+      "ServiceName": "orderService",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/customer/getcustomerbyemail",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7006
-        }
-      ],
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 7006
+      //  }
+      //],
       "UpstreamPathTemplate": "/api/customer/getcustomerbyemail",
-      "UpstreamHttpMethod": [ "GET" ]
-
+      "UpstreamHttpMethod": [ "GET" ],
+      "ServiceName": "customerService",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
     }
 
   ],
@@ -134,7 +154,7 @@
     "ServiceDiscoveryProvider": {
       "Scheme": "http",
       "Host": "localhost",
-      "Port": 8300,
+      "Port": 8500,
       "Type": "Consul"
     }
 

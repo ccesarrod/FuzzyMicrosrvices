@@ -1,5 +1,6 @@
 ﻿using CacheManager.Core.Logging;
 using Consul;
+using FluentAssertions.Common;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -13,7 +14,9 @@ using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
+using ServiceDiscovery;
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 
@@ -52,7 +55,10 @@ namespace FuzzyGetway
                 })
                 .ConfigureServices(services =>
                 {
-                    services.AddOcelot().AddConsul();
+                    services.AddOcelot()
+                            .AddConsul()
+                           .AddConfigStoredInConsul();
+
                     services.AddCors(options =>
                     {
                         options.AddPolicy(name:MyAllowSpecificOrigins,
@@ -100,7 +106,9 @@ namespace FuzzyGetway
                     });
 
                     //configure services discovery
-                  // services.Configure<ConsulConfig>(Configuration.GetSection("consulConfig"));
+                    // services.Configure<ConsulConfig>(Configuration.GetSection("consulConfig"));
+
+                   
                     services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
                     {
                         var address = "http://localhost";// Configuration["consulConfig:address"];
@@ -117,51 +125,13 @@ namespace FuzzyGetway
                     //  .AllowCredentials());
 
                     a.UseOcelot().Wait();
-                   RegisterWithConsul(a);
+                  
 
                 })
                 .Build();
         }
 
-        private static void RegisterWithConsul(IApplicationBuilder app)
-        {
-            // Retrieve Consul client from DI
-            var consulClient = app.ApplicationServices
-                                .GetRequiredService<IConsulClient>();
-            var consulConfig = app.ApplicationServices
-                                .GetRequiredService<IOptions<ConsulConfig>>();
-            // Setup logger
-            //var loggingFactory = app.ApplicationServices
-            //                    .GetRequiredService<ILoggerFactory>();
-         //   var logger = loggingFactory.CreateLogger<IApplicationBuilder>();
-
-            // Get server IP address
-            var features = app.Properties["server.Features"] as FeatureCollection;
-            var addresses = features.Get<IServerAddressesFeature>();
-            var address = addresses.Addresses.First();
-
-            // Register service with consul
-            var uri = new Uri("http://localhost");
-            var registration = new AgentServiceRegistration()
-            {
-                ID = "consul", //$"{consulConfig.Value.ServiceID}-{uri.Port}",
-                Name = "consul",//consulConfig.Value.ServiceName,
-                Address = "localhost",
-                Port = 8300,//uri.Port,
-                Tags = new[] { "catalog","product" }
-            };
-
-           // logger.LogInformation("Registering with Consul");
-            consulClient.Agent.ServiceDeregister(registration.ID).Wait();
-            consulClient.Agent.ServiceRegister(registration).Wait();
-
-            //lifetime.ApplicationStopping.Register(() => {
-            //    logger.LogInformation("Deregistering from Consul");
-            //    consulClient.Agent.ServiceDeregister(registration.ID).Wait();
-            //});
-
-         
-        }
+      
     }
 
 }
