@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ServiceDiscovery;
 using ServicesAPI.CategoryAPI;
 using System;
 
@@ -40,6 +41,7 @@ namespace CatalogService
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryServiceAPI, CategoryServiceAPI>();
 
+            services.Configure<ServiceDiscoveryConfiguration>(Configuration.GetSection("consulConfig"));
             services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
             {
                 //consul address  

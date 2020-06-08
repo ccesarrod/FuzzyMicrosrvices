@@ -16,6 +16,7 @@ using RabbitMQ.Client;
 using ServicesAPI.ProductAPI;
 using System;
 using System.Text;
+using Microsoft.Extensions.Options;
 
 namespace ProductService
 {
@@ -109,6 +110,7 @@ namespace ProductService
             //var rabbitMQPersistentConnection = ser.GetRequiredService<IRabbitMQPersistentConnection>();
             
             services.AddHostedService<NewOrderCreatedEventHandler>();
+            services.AddOptions();
             services.Configure<ServiceDiscoveryConfiguration>(Configuration.GetSection("consulConfig"));
            
             services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
@@ -124,6 +126,7 @@ namespace ProductService
                 handlerOverride.Proxy = null;
                 handlerOverride.UseProxy = false;
             }));
+            
 
         }
 
@@ -155,7 +158,7 @@ namespace ProductService
             app.UseConsul(Configuration);
         }
 
-        private static void RegisterWithConsul(IApplicationBuilder app)
+        private static void RegisterWithConsul(IApplicationBuilder app, IOptions<ServiceDiscoveryConfiguration> options)
         {
             // Retrieve Consul client from DI
             var consulClient = app.ApplicationServices

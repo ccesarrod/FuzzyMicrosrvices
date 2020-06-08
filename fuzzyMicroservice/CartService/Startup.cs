@@ -73,7 +73,7 @@ namespace CartService
             services.AddScoped<ICartDetailsRepository, CartDetailsRepository>();
 
             services.Configure<ServiceDiscoveryConfiguration>(Configuration.GetSection("consulConfig"));
-
+           
             services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
             {
                 //consul address  
