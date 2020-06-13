@@ -127,6 +127,18 @@ namespace SpawnProcesses
                 process5.StartInfo.Arguments = runningPath + @"AuthenticationService";
                 process5.Start();
             }
+            if (startUpProcesses.CustomerService == true)
+            {
+                Console.WriteLine("Starting Customer Service");
+
+                Process process6 = new Process();
+                process6.StartInfo.CreateNoWindow = false;
+                process6.StartInfo.UseShellExecute = false;
+                process6.StartInfo.RedirectStandardOutput = false;
+                process6.StartInfo.FileName = runningPath + @"Support\startCustomerservice.bat";
+                process6.StartInfo.Arguments = runningPath + @"CustomerService";
+                process6.Start();
+            }
 
 
             Console.ReadKey();

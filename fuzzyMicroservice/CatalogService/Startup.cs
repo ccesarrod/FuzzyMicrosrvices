@@ -76,8 +76,8 @@ namespace CatalogService
             {
                 endpoints.MapControllers();
             });
-            
 
+            app.UseConsul(Configuration);
            // RegisterWithConsul(app);
         }
 

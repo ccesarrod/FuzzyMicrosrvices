@@ -24,7 +24,8 @@ namespace DataCore
             modelBuilder.Entity<Customer>()
                 .HasMany(t => t.Cart)
                 .WithOne(c => c.Customer)
-                .HasForeignKey(c => c.CustomerID);
+                .HasForeignKey(c => c.CustomerID)
+                .OnDelete(DeleteBehavior.Cascade);
             //modelBuilder.Entity<CartDetails>().HasKey(t => t.Id);
             //modelBuilder.Entity<CartDetails>().ToTable("Cart");
             modelBuilder.ApplyConfiguration(new CartConfiguration());

@@ -1,6 +1,7 @@
 ﻿using DataCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Data.Entity.ModelConfiguration;
 
 namespace DataCore.Configurations
@@ -16,6 +17,10 @@ namespace DataCore.Configurations
         {
             modelBuilder.ToTable("Cart");
             modelBuilder.HasKey(t => t.Id);
+
+            modelBuilder.HasOne(x => x.Customer)
+                .WithMany(t => t.Cart)
+                .HasForeignKey(z => z.CustomerID);
            
         }
     }

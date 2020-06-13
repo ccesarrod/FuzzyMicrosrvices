@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SpawnProcesses
 {
@@ -12,6 +10,8 @@ namespace SpawnProcesses
         public Boolean AuthenticationService{ get; set; }
         public Boolean OrderService { get; set; }
         public Boolean FuzzyGetway { get; set; }
+
+        public Boolean CustomerService { get; set; }
         
     }
 }

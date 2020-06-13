@@ -85,7 +85,9 @@ namespace ServicesAPI.CustomerAPI
 
                 // var cartList = customer.Cart;
                 customer.Cart.Clear();
+                _customerRepository.Update(customer);
 
+                _customerRepository.Save();
                 //cartList.ForEach(m => _cartDetailsRepository.Delete(m));
                 //_cartDetailsRepository.Save();                
 

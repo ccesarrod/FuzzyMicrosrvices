@@ -1,5 +1,6 @@
 using Consul;
 using DataCore;
+using DataCore.Entities;
 using DataCore.Repositories;
 using DataCore.Repository;
 using Microsoft.AspNetCore.Builder;
@@ -8,10 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using ServiceDiscovery;
 using ServicesAPI.CustomerAPI;
 using System;
+using System.Text;
 
 namespace CustomerService
 {
@@ -38,6 +40,38 @@ namespace CustomerService
                 options.UseLazyLoadingProxies();
                 options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
             });
+
+            var authenticationProviderKey = "IdentityApiKey";
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var signingKey = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = false,
+                IssuerSigningKey = new SymmetricSecurityKey(signingKey),
+                ValidateIssuer = false,
+                ValidIssuer = "http://localhost:7000",
+                ValidateAudience = false,
+
+            };
+
+            services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = authenticationProviderKey;
+                o.DefaultScheme = authenticationProviderKey;
+            })
+            .AddJwtBearer(authenticationProviderKey, x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.TokenValidationParameters = tokenValidationParameters;
+            });
+
+
             services.AddScoped<ICustomerService, ServicesAPI.CustomerAPI.CustomerService>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
@@ -69,7 +103,7 @@ namespace CustomerService
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();

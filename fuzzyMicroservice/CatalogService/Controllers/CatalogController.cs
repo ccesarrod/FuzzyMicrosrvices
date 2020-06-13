@@ -31,6 +31,8 @@ namespace CatalogService.Controllers
         public async Task<ActionResult> All()
         {
             var services = _consulClient.Agent.Services().Result.Response;
+           var list = await _consulClient.Catalog.Services();
+           
             // var services = await _consulClient.KV.Get("product");
             //var test = Encoding.UTF8.GetString(services.Response.Value, 0,
             //    services.Response.Value.Length);

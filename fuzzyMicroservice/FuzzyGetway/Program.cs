@@ -56,8 +56,8 @@ namespace FuzzyGetway
                 .ConfigureServices(services =>
                 {
                     services.AddOcelot()
-                            .AddConsul()
-                           .AddConfigStoredInConsul();
+                            .AddConsul();
+                        //   .AddConfigStoredInConsul();
 
                     services.AddCors(options =>
                     {
