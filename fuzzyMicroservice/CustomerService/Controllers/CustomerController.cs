@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DataCore.Entities;
 using DataCore.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServicesAPI.CustomerAPI;
 
@@ -28,55 +30,61 @@ namespace CustomerService.Controllers
             {
                 var user = HttpContext.User.Identity.Name;
                 var customer = _customerService.getByEmail(user);
-                _customerService.SyncShoppingCart(customer.Email, cartView.ToList());
-
-                return Ok(new
+                try
                 {
-                    cart = cartView
-                });
+                    _customerService.SyncShoppingCart(customer, cartView.ToList());
+
+                    return Ok(new
+                    {
+                        cart = cartView
+                    });
+                }catch(Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                    
+                }
             }
 
             return NotFound();
         }
         // GET: api/<CustomerController>
         [HttpGet("getcustomerbyemail")]
-        public ActionResult<Customer> GetCustomerByEmail()
+        public ActionResult<Customer> GetCustomerByEmail(string email)
         {
             try
             {
-                var customer = _customerService.getByEmail("test2@yahoo.com");
+                var customer = _customerService.getByEmail(email);
                 return Ok(customer);
             }
-            catch
+            catch(Exception ex)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
             
         }
 
-        // GET api/<CustomerController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
-        // POST api/<CustomerController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpDelete("deletecart")]
+        [Authorize]
+        public ActionResult DeleteCart()
         {
-        }
+            if (HttpContext.User.Identities.Any())
+            {
+                try
+                {
+                    var user = HttpContext.User.Identity.Name;
+                    var customer = _customerService.getByEmail(user);
+                    _customerService.DeleteShoppingCart(customer);
+                    return Ok();
+                }
+                catch(Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                }
+               
+            }
 
-        // PUT api/<CustomerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CustomerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return NotFound("customer not found");
         }
     }
 }

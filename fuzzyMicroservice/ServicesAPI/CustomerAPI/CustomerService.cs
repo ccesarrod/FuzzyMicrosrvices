@@ -3,23 +3,19 @@ using System.Linq;
 using DataCore.Entities;
 using DataCore.Models;
 using DataCore.Repositories;
-using DataCore.Repository;
 
 namespace ServicesAPI.CustomerAPI
 {
     public class CustomerService : ICustomerService
     {
         private ICustomerRepository _customerRepository;
-        private readonly IProductRepository _productRepository;
-        private readonly ICartDetailsRepository _cartDetailsRepository;
+      
+   
 
-        public CustomerService(ICustomerRepository context, 
-                                    IProductRepository product,
-                                    ICartDetailsRepository cartDetailsRepository)
-        {
-            _customerRepository = context;
-            _productRepository = product;
-            _cartDetailsRepository = cartDetailsRepository;
+        public CustomerService(ICustomerRepository context) {                            
+                                    
+            _customerRepository = context;        
+            
         }
         public Customer AddUser(Customer user)
         {
@@ -56,17 +52,11 @@ namespace ServicesAPI.CustomerAPI
 
        
 
-        private Product GetProductById(int id)
+
+        public List<CartDetails> SyncShoppingCart(Customer customer, List<Cart> cartUpdates)
         {
-            return _productRepository.Find(x => x.ProductID == id).SingleOrDefault();
-        }
-
-        public List<CartDetails> SyncShoppingCart(string userEmail, List<Cart> cartUpdates)
-        {
-            var customer = getByEmail(userEmail);
-
-
-            if (customer == null) return customer.Cart.ToList();
+          
+          //  if (customer == null) return customer.Cart.ToList();
 
             if (customer != null && customer.Cart == null)
             {
@@ -83,13 +73,12 @@ namespace ServicesAPI.CustomerAPI
                     customer.Cart = new List<CartDetails>();
                 }
 
-                // var cartList = customer.Cart;
-                customer.Cart.Clear();
-                _customerRepository.Update(customer);
+                DeleteShoppingCart(customer);
+                //customer.Cart.Clear();
+                //_customerRepository.Update(customer);
 
-                _customerRepository.Save();
-                //cartList.ForEach(m => _cartDetailsRepository.Delete(m));
-                //_cartDetailsRepository.Save();                
+                //_customerRepository.Save();
+               
 
                 foreach (var item in cartUpdates)
                 {
@@ -97,12 +86,10 @@ namespace ServicesAPI.CustomerAPI
                     if (cartItem == null)
                         customer.Cart.Add (new CartDetails
                         {
-                            CustomerID = customer.CustomerID,
-                            Customer = customer,
+                            CustomerID = customer.CustomerID,                          
                             Price = item.Price,
                             Quantity = item.Quantity,
-                            ProductId = item.Id
-                           // Product = GetProductById(item.Id)
+                            ProductId = item.Id                          
                         }); 
                     
 
@@ -127,18 +114,18 @@ namespace ServicesAPI.CustomerAPI
             return cart;
         }
 
-        public List<CartDetails> DeleteShoppingCart(Customer customer)
+        public void DeleteShoppingCart(Customer customer)
         {
-            if (customer.Cart.Count > 0)
-            {
-                _cartDetailsRepository.DeleteRage(customer.Cart);
-
-                _cartDetailsRepository.Save();
-            }           
            
-            return customer.Cart.ToList();
+                //_cartDetailsRepository.DeleteRage(customer.Cart);
+
+                //_cartDetailsRepository.Save();
+                customer.Cart.Clear();
+                _customerRepository.Update(customer);
+                _customerRepository.Save();
+       
         }
 
-        
+       
     }
 }

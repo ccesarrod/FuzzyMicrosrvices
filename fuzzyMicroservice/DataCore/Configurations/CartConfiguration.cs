@@ -18,9 +18,7 @@ namespace DataCore.Configurations
             modelBuilder.ToTable("Cart");
             modelBuilder.HasKey(t => t.Id);
 
-            modelBuilder.HasOne(x => x.Customer)
-                .WithMany(t => t.Cart)
-                .HasForeignKey(z => z.CustomerID);
+           
            
         }
     }

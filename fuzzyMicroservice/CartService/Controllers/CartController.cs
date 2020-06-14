@@ -1,17 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Consul;
-using DataCore.Entities;
 using DataCore.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using ServicesAPI.CustomerAPI;
 
 namespace CartService.Controllers
 {
@@ -19,13 +15,12 @@ namespace CartService.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private readonly ICustomerService _customerService;
+        
         private readonly IConsulClient _consulClient;
         private readonly IHttpClientFactory _factory;
 
-        public CartController(ICustomerService customerAPI, IConsulClient consulClient, IHttpClientFactory httpClient)
-        {
-            _customerService = customerAPI;
+        public CartController(IConsulClient consulClient, IHttpClientFactory httpClient)
+        {          
             _consulClient = consulClient;
             _factory = httpClient;
         }
@@ -45,14 +40,9 @@ namespace CartService.Controllers
                 var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
                 var byteContent = new ByteArrayContent(buffer);
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-             //   client.DefaultRequestHeaders.Add("Accept", "application/json");
-             //   client.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                 var response = await client.PostAsync(customerServiceUrl, byteContent);
-                var code =JsonConvert.SerializeObject(response.ToString());
-                string result = response.Content.ReadAsStringAsync().Result;
-                // var customer = GetAutenticatedCustomer();
-                //  _customerService.SyncShoppingCart(customer.Email, cartView.ToList());
+              
                 if (response.IsSuccessStatusCode) {
                     return Ok(new
                     {
@@ -60,7 +50,7 @@ namespace CartService.Controllers
                     });
                 }
                 else {
-                    return StatusCode(500);
+                    return StatusCode(StatusCodes.Status500InternalServerError,response.Content);
                 }
             
 
@@ -79,31 +69,19 @@ namespace CartService.Controllers
             return url;
         }
 
-        [HttpDelete("delete")]
-        [Authorize]
-        public ActionResult Delete()
-        {
-            if (HttpContext.User.Identities.Any())
-            {
-                var customer = GetAutenticatedCustomer();
-                _customerService.DeleteShoppingCart(customer);
-                return Ok();
-            }
+        
 
-            return NotFound("customer not found");
-        }
+        //private Customer GetAutenticatedCustomer()
+        //{
 
-        private Customer GetAutenticatedCustomer()
-        {
+        //    return User.Identity.IsAuthenticated ? GetCustomerByEmail() : new Customer();
+        //}
 
-            return User.Identity.IsAuthenticated ? GetCustomerByEmail() : new Customer();
-        }
+        //private Customer GetCustomerByEmail()
+        //{
+        //    var user = HttpContext.User.Identity.Name;
 
-        private Customer GetCustomerByEmail()
-        {
-            var user = HttpContext.User.Identity.Name;
-
-            return _customerService.getByEmail(user);
-        }
+        //    return _customerService.getByEmail(user);
+        //}
     }
 }

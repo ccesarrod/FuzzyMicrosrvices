@@ -13,9 +13,9 @@ namespace ServicesAPI.CustomerAPI
 
         Customer getByEmail(string email);
 
-        List<CartDetails> DeleteShoppingCart(Customer customer);
+        void DeleteShoppingCart(Customer customer);
 
-        List<CartDetails> SyncShoppingCart(string userEmail, List<Cart> cartUpdates);
+        List<CartDetails> SyncShoppingCart(Customer customer, List<Cart> cartUpdates);
         List<CartDetails> GetShoopingCart(string userEmail);
     }
 }

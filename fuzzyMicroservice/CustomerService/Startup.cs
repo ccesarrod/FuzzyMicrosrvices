@@ -74,8 +74,8 @@ namespace CustomerService
 
             services.AddScoped<ICustomerService, ServicesAPI.CustomerAPI.CustomerService>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<ICartDetailsRepository, CartDetailsRepository>();
+          //  services.AddScoped<IProductRepository, ProductRepository>();
+         //   services.AddScoped<ICartDetailsRepository, CartDetailsRepository>();
             services.Configure<ServiceDiscoveryConfiguration>(Configuration.GetSection("consulConfig"));
 
             services.Configure<ServiceDiscoveryConfiguration>(Configuration.GetSection("consulConfig"));
