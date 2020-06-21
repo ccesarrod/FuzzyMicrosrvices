@@ -1,30 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '@services/cart.service';
 import { ICartItem } from '@models/cartItem-model';
+import { IOrder } from '@models/order';
+import { OrderService } from '@services/order.service';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.sass']
+  styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
-cart:ICartItem[];
+ 
+  private interval = null;
+  errorReceived: boolean;
 
-  constructor(private cartService: CartService,) { }
+  orders: IOrder[];
+
+  constructor(private service: OrderService) { }
 
   ngOnInit() {
-    this.cartService.getCart().subscribe(data=> {
-      this.cart = data;
-    });
+    this.getOrders();
+        
   }
 
-  get totalCount() {
-
-    return this.cartService.totalCount();    
+  getOrders() {
+      this.errorReceived = false;
+      this.service.getOrdersByCustomer()
+          .pipe(catchError((err) => this.handleError(err)))
+          .subscribe(orders => {
+              this.orders = orders;
+              console.log('orders items retrieved: ' + orders.length);
+      });
   }
 
-  get totalPrice() {
-    return this.cartService.totalPrice();
+  private handleError(error: any) {
+      this.errorReceived = true;
+      return Observable.throw(error);
+   
   }
+
+  
 
 }

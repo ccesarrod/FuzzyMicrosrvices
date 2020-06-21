@@ -8,6 +8,7 @@ import { ThankyouComponent } from './thankyou/thankyou.component';
 const routes: Routes = [
     { path: '', component: OrderComponent },
     { path: 'order-new', component: OrderNewComponent },
+    { path: 'order-detail/{Id}', component: OrderNewComponent },
     {path:'order-complete', component:ThankyouComponent }
     
 

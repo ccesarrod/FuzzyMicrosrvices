@@ -5,10 +5,11 @@ import { OrderRoutingModule } from './order-routing';
 import { OrderNewComponent } from './order-new/order-new.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ThankyouComponent } from './thankyou/thankyou.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 
 @NgModule({
-  declarations: [OrderComponent, OrderNewComponent, ThankyouComponent],
+  declarations: [OrderComponent, OrderNewComponent, ThankyouComponent, OrderDetailsComponent],
   imports: [
     CommonModule,
     OrderRoutingModule,

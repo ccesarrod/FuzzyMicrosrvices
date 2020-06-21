@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Consul;
@@ -34,7 +35,7 @@ namespace CartService.Controllers
             {
                 var accessToken1 = HttpContext.Request.Headers["Authorization"];
                 var accessToken = await HttpContext.GetTokenAsync("access_token");
-                var customerServiceUrl = GetCustomerServiceUrl();
+                var customerServiceUrl = GetCustomerServiceUrl("save");
 
                 var myContent = JsonConvert.SerializeObject(cartView);
                 var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
@@ -59,13 +60,56 @@ namespace CartService.Controllers
             return NotFound();
         }
 
-        private string  GetCustomerServiceUrl()
+        [HttpDelete("deletecart")]
+        [Authorize]
+        public async System.Threading.Tasks.Task<ActionResult> DeleteCart()
         {
+            if (HttpContext.User.Identities.Any())
+            {
+                var client = _factory.CreateClient();
+                try
+                {
+                    var user = HttpContext.User.Identity.Name;
+                    var accessToken = await HttpContext.GetTokenAsync("access_token");
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                    var customerServiceUrl = GetCustomerServiceUrl("delete");
+                    var response = await client.DeleteAsync(customerServiceUrl);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, response.Content);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                }
+
+            }
+
+            return NotFound("customer not found");
+        }
+
+        private string  GetCustomerServiceUrl(string action)
+        {
+            var actionPath = "";
+            switch (action)
+            {
+                case "save":
+                    actionPath = "savecart";
+                break;
+                case "delete":
+                    actionPath = "deletecart";
+                    break;
+            }
 
             var services = _consulClient.Agent.Services().Result.Response;
 
             var service = services.FirstOrDefault(x => x.Key == "customerService");
-            var url = $"http://{service.Value.Address}:7000/api/customer/savecart";
+            var url = $"http://{service.Value.Address}:7000/api/customer/{actionPath}";
             return url;
         }
 

@@ -102,7 +102,7 @@
       //  }
       //],
       "UpstreamPathTemplate": "/api/order/{everything}",
-      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamHttpMethod": [ "POST","GET" ],
       "RequestIdKey": "OcRequestId",
       "ServiceName": "orderService",
       "LoadBalancerOptions": {
@@ -130,7 +130,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/customer/savecart",
+      "DownstreamPathTemplate": "/api/customer/{everything} ",
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -138,8 +138,8 @@
       //    "Port": 7006
       //  }
       //],
-      "UpstreamPathTemplate": "/api/customer/savecart",
-      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamPathTemplate": "/api/customer/{everything}",
+      "UpstreamHttpMethod": [ "POST", "DELETE","GET" ],
       "ServiceName": "customerService",
       "LoadBalancerOptions": {
         "Type": "LeastConnection"

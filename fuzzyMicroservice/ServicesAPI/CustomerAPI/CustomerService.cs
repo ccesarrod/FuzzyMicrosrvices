@@ -117,9 +117,7 @@ namespace ServicesAPI.CustomerAPI
         public void DeleteShoppingCart(Customer customer)
         {
            
-                //_cartDetailsRepository.DeleteRage(customer.Cart);
-
-                //_cartDetailsRepository.Save();
+              
                 customer.Cart.Clear();
                 _customerRepository.Update(customer);
                 _customerRepository.Save();

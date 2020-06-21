@@ -39,6 +39,16 @@
         <li class="nav-item active">          
           <span class="nav-link">{{userName}}</span>       
         </li>
+        <li ngbDropdown class="nav-item" >
+          <a href (click)="false" class="nav-link" ngbDropdownToggle>Dropdown</a>
+          <div ngbDropdownMenu>
+            <button ngbDropdownItem>Profile</button>
+            <button ngbDropdownItem><a routerLink="/orders">My Orders</a></button>
+            <button ngbDropdownItem>Something else here</button>
+            <div class="dropdown-divider"></div>
+            <button ngbDropdownItem>Separated link</button>
+          </div>
+        </li>
         <li class="nav-item active">
           <a (click)='login()' class="nav-link">
             <span class='glyphicon glyphicon-login'></span> {{loginAction}}

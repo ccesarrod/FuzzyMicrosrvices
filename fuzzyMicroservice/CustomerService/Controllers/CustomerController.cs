@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using CustomerService.Models;
 using DataCore.Entities;
 using DataCore.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -38,10 +40,11 @@ namespace CustomerService.Controllers
                     {
                         cart = cartView
                     });
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError, ex);
-                    
+
                 }
             }
 
@@ -53,15 +56,40 @@ namespace CustomerService.Controllers
         {
             try
             {
+
                 var customer = _customerService.getByEmail(email);
                 return Ok(customer);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
-            
+
         }
+
+        // GET: api/<CustomerController>
+        [HttpGet("getorders")]
+        [Authorize]
+        public ActionResult<OrderViewModel[]> GetOrders()
+        {
+            if (HttpContext.User.Identities.Any())
+            {
+                try
+                {
+                    var email = HttpContext.User.Identity.Name;
+                    var customer = _customerService.getByEmail(email);
+                    var mapped_orders = MapOrdersToView(customer.Orders.ToList());
+                    return Ok(mapped_orders);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                }
+            }
+
+            return NotFound();
+        }
+
 
 
         [HttpDelete("deletecart")]
@@ -77,14 +105,38 @@ namespace CustomerService.Controllers
                     _customerService.DeleteShoppingCart(customer);
                     return Ok();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError, ex);
                 }
-               
+
             }
 
             return NotFound("customer not found");
         }
+
+
+        private ICollection<OrderViewModel> MapOrdersToView(List<Order> orders)
+        {
+            var results = new List<OrderViewModel>();
+            orders.ForEach(order =>
+            {
+                results.Add(new OrderViewModel
+                {
+                    OrderID = order.OrderID,
+                    OrderDate = order.OrderDate,
+                    ShipAddress = order.ShipAddress,
+                    ShipCity = order.ShipCity,
+                    ShipCountry = order.ShipCountry,
+                    ShipName = order.ShipName,
+                    ShippedDate = order.ShippedDate,
+                    ShipPostalCode = order.ShipPostalCode,
+                    ShipRegion = order.ShipRegion
+                });
+            });
+            return results.ToArray();
+        }
     }
+
+   
 }

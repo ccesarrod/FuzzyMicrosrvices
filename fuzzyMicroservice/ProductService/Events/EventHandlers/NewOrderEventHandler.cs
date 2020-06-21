@@ -108,6 +108,8 @@ namespace ProductService.Events.EventHandlers
                     var temp = _productService.UpdateQuantity(product.id, product.quantity);
                     result = !result ? temp || result : temp && result;
                 }
+
+                //publish order status
             }
            
         }

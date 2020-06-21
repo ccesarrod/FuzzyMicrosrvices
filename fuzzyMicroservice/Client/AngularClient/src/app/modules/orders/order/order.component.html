@@ -1,64 +1,26 @@
-<h2>Orders Details</h2>
-
-Checkout
-<div class="flex">
+<div class="esh-orders">
  
-    <table class="table table-bordered">
-      <tr class="well">
-        <td class="tdCenter">
-          <b>Total Quantity:{{ totalCount }} </b>
-        </td>
-        <td class="tdRight">
-          <b>Amount: {{ totalPrice }}</b>
-        </td>
-        <!--  <td src="~/images/glyphicons-237-zoom-in.png" class="img-thumbnail bg-info"></td> -->
-        <!-- <td ng-controller="ModalSummaryCtrl"><img src="~/images/glyphicons-237-zoom-in.png" class="img-thumbnail bg-info" ng-click="open('sm')" /></td> -->
-      </tr>
-    </table>
+  <div class="container">
+      <div class="alert alert-warning esh-orders-alert" role="alert" [hidden]="!errorReceived">
+          Error requesting order list, please try later on
+      </div>
+      <article class="esh-orders-titles row">
+          <section class="esh-orders-title col-2">Order number</section>
+          <section class="esh-orders-title col-4">Date</section>
+          <section class="esh-orders-title col-2">Total</section>
+          <section class="esh-orders-title col-2">Status</section>
+          <section class="esh-orders-title col-2"></section>
+      </article>
 
-    <div class="d-flex flex-row">
-      <!-- <ul class="list-inline">
-            <li class="list-group-item"> <a href="#/Customer">Shipping Details</a></li>
-            <li class="list-group-item"><a href="#/Payment">Payment methods</a></li>
-
-        </ul> -->
-        <div class="d-flex flex-column">
-            <nav class="navbar bg-light">
-                <!-- Links -->
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Shipping Details</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Payment methods</a>
-                  </li>
-                  
-                </ul>
-              </nav>
-        </div>
-     
-    </div>
- 
-  <!-- <div class="row" ng-controller="orderController">
-    <div ng-view></div>
-
-</div> -->
-
-  <div>
-    <div class="modal-header">
-      <h3 class="modal-title"></h3>
-    </div>
-    <!-- <div class="modal-body">
-            <ul>
-                <li ng-repeat="item in items">
-                    <a ng-click="selected.item = item">{{ item }}</a>
-                </li>
-            </ul>
-            Selected: <b>{{ selected.item }}</b>
-        </div> -->
-    <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="ok()">OK</button>
-      <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-    </div>
+      <article class="esh-orders-items row"
+               *ngFor="let order of orders">
+          <section class="esh-orders-item col-2">{{order.OrdeID}}</section>
+          <section class="esh-orders-item col-4">{{order.OrderDate | date:'short'}}</section>
+          <section class="esh-orders-item col-2">$ </section>
+          <section class="esh-orders-item col-2"></section>
+          <section class="esh-orders-item col-2">
+              <a class="esh-orders-link" routerLink="/orders/order-detail/{{order.OrderID}}">Detail</a>
+          </section>
+      </article>
   </div>
 </div>

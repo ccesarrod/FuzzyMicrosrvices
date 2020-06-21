@@ -12,7 +12,7 @@ import { JwtInterceptor} from './services/jwtInterceptor';
 import {CartService } from './services/cart.service';
 import {OrderService} from '@services/order.service'
 import { AppToastService } from '@services/app-toast.service';
-import { AppToastComponent } from './shared/app-toast/app-toast.component';
+import { AppToastComponent } from '@shared/app-toast/app-toast.component';
 import {OrdersModule} from '@modules/orders/orders.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 @NgModule({

@@ -1,8 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Consul;
 using DataCore.Entities;
 using EventCore.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrderService.Events;
 using OrderService.Models;
@@ -16,11 +23,17 @@ namespace OrderServer.Controllers
     {
         private readonly IOrderAPI _orderAPI;
         private readonly IEventPublisher _eventPublisher;
+        private readonly IConsulClient _consulClient;
+        private readonly IHttpClientFactory _factory;
 
-        public OrderController(IOrderAPI orderAPI, IEventPublisher eventPublisher)
+        public OrderController(IOrderAPI orderAPI, 
+                            IEventPublisher eventPublisher,
+                            IConsulClient consulClient, IHttpClientFactory httpClient)
         {
             _orderAPI = orderAPI;
             _eventPublisher = eventPublisher;
+            _consulClient = consulClient;
+            this._factory = httpClient;
         }
         // GET api/values
         [HttpGet]
@@ -31,7 +44,7 @@ namespace OrderServer.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-      
+        [Authorize]
         public ActionResult<Order> Get(int id)
         {
             var order= _orderAPI.GetById(id);
@@ -41,6 +54,39 @@ namespace OrderServer.Controllers
                 return NotFound(); // Returns a NotFoundResult
             }
             return Ok(order);
+        }
+
+       
+        [HttpGet("getCustomerOrders")]
+        [Authorize]
+        public async Task<ActionResult<Order>> GetCustomerOrdersAsync()
+        {
+            if (HttpContext.User.Identities.Any())
+            {
+                var client = _factory.CreateClient();
+                try
+                {
+                    var user = HttpContext.User.Identity.Name;
+                    var accessToken = await HttpContext.GetTokenAsync("access_token");
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                    var customerServiceUrl = GetCustomerServiceUrl("orders");
+                    var response = await client.GetAsync(customerServiceUrl);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, response.Content);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                }
+            }
+
+            return NotFound();
         }
 
         // POST api/values
@@ -56,11 +102,6 @@ namespace OrderServer.Controllers
             return Ok(MapToOrderViewModel(order));
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
@@ -105,6 +146,26 @@ namespace OrderServer.Controllers
             });
 
             return list;
+        }
+
+        private string GetCustomerServiceUrl(string action)
+        {
+            var actionPath = "";
+            switch (action)
+            {
+                case "save":
+                    actionPath = "savecart";
+                    break;
+                case "delete":
+                    actionPath = "deletecart";
+                    break;
+            }
+
+            var services = _consulClient.Agent.Services().Result.Response;
+
+            var service = services.FirstOrDefault(x => x.Key == "customerService");
+            var url = $"http://{service.Value.Address}:7000/api/customer/{actionPath}";
+            return url;
         }
     }
 }
