@@ -13,7 +13,7 @@ export class OrderService {
     }
 
     getOrdersByCustomer(): Observable<IOrder[]> {
-        let url = `${environment.apiUrl}/customer/getorders`;
+        let url = `${environment.apiUrl}/customer/orders`;
          return this.httpclient.get<IOrder[]>(url);
       }
 }

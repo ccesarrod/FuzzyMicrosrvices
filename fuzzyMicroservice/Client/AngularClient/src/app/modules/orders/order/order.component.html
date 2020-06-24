@@ -6,18 +6,18 @@
       </div>
       <article class="esh-orders-titles row">
           <section class="esh-orders-title col-2">Order number</section>
-          <section class="esh-orders-title col-4">Date</section>
-          <section class="esh-orders-title col-2">Total</section>
-          <section class="esh-orders-title col-2">Status</section>
+          <section class="esh-orders-title col-2">Date</section>
+          <section class="esh-orders-title col-4">Address</section>
+          <section class="esh-orders-title col-2">City</section>
           <section class="esh-orders-title col-2"></section>
       </article>
 
       <article class="esh-orders-items row"
                *ngFor="let order of orders">
-          <section class="esh-orders-item col-2">{{order.OrdeID}}</section>
-          <section class="esh-orders-item col-4">{{order.OrderDate | date:'short'}}</section>
-          <section class="esh-orders-item col-2">$ </section>
-          <section class="esh-orders-item col-2"></section>
+          <section class="esh-orders-item col-2">{{order.orderID}}</section>
+          <section class="esh-orders-item col-2">{{order.OrderDate | date:'short'}}</section>
+          <section class="esh-orders-item col-4"> {{order.shipAddress}}</section>
+          <section class="esh-orders-item col-2">{{order.shipCity}}</section>
           <section class="esh-orders-item col-2">
               <a class="esh-orders-link" routerLink="/orders/order-detail/{{order.OrderID}}">Detail</a>
           </section>

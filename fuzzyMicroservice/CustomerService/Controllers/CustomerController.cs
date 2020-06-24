@@ -68,9 +68,9 @@ namespace CustomerService.Controllers
         }
 
         // GET: api/<CustomerController>
-        [HttpGet("getorders")]
+        [HttpGet("orders")]
         [Authorize]
-        public ActionResult<OrderViewModel[]> GetOrders()
+        public ActionResult<OrderViewModel[]> Orders()
         {
             if (HttpContext.User.Identities.Any())
             {
@@ -131,7 +131,7 @@ namespace CustomerService.Controllers
                     ShipName = order.ShipName,
                     ShippedDate = order.ShippedDate,
                     ShipPostalCode = order.ShipPostalCode,
-                    ShipRegion = order.ShipRegion
+                    ShipRegion = order.ShipRegion                    
                 });
             });
             return results.ToArray();

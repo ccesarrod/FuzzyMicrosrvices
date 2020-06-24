@@ -130,7 +130,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/customer/{everything} ",
+      "DownstreamPathTemplate": "/api/customer/{everything}",
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -148,23 +148,23 @@
         "AuthenticationProviderKey": "IdentityApiKey",
         "AllowedScopes": []
       }
-    },
-    {
-      "DownstreamPathTemplate": "/api/customer/{everything}",
-      "DownstreamScheme": "http",
-      //"DownstreamHostAndPorts": [
-      //  {
-      //    "Host": "localhost",
-      //    "Port": 7006
-      //  }
-      //],
-      "UpstreamPathTemplate": "/api/customer/{everything}",
-      "UpstreamHttpMethod": [  "GET" ],
-      "ServiceName": "customerService",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
-    }   
+    }
+    //{
+    //  "DownstreamPathTemplate": "/api/customer/{everything}",
+    //  "DownstreamScheme": "http",
+    //  //"DownstreamHostAndPorts": [
+    //  //  {
+    //  //    "Host": "localhost",
+    //  //    "Port": 7006
+    //  //  }
+    //  //],
+    //  "UpstreamPathTemplate": "/api/customer/{everything}",
+    //  "UpstreamHttpMethod": [  "GET" ],
+    //  "ServiceName": "customerService",
+    //  "LoadBalancerOptions": {
+    //    "Type": "LeastConnection"
+    //  }
+   // }   
 
   ],
   "GlobalConfiguration": {
