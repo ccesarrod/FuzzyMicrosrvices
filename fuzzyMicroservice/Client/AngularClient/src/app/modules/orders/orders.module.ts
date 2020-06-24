@@ -6,7 +6,7 @@ import { OrderNewComponent } from './order-new/order-new.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ThankyouComponent } from './thankyou/thankyou.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
-
+import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [OrderComponent, OrderNewComponent, ThankyouComponent, OrderDetailsComponent],
@@ -14,7 +14,8 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     CommonModule,
     OrderRoutingModule,
     FormsModule,   
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbPaginationModule
   ]
 })
 export class OrdersModule { }

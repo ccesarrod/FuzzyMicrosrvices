@@ -15,12 +15,15 @@ import { AppToastService } from '@services/app-toast.service';
 import { AppToastComponent } from '@shared/app-toast/app-toast.component';
 import {OrdersModule} from '@modules/orders/orders.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+import { PaginationComponent } from './shared/pagination/pagination.component';
 @NgModule({
   declarations: [
     AppComponent,
     NavmenuComponent,
     HomeComponent,
-    AppToastComponent
+    AppToastComponent,   
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
