@@ -17,13 +17,15 @@ import {OrdersModule} from '@modules/orders/orders.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { PaginationComponent } from './shared/pagination/pagination.component';
+import { SortableHeadesDirective } from './shared/sortable-heades.directive';
 @NgModule({
   declarations: [
     AppComponent,
     NavmenuComponent,
     HomeComponent,
     AppToastComponent,   
-    PaginationComponent
+    PaginationComponent, 
+    SortableHeadesDirective
   ],
   imports: [
     BrowserModule,

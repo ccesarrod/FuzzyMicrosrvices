@@ -36,8 +36,7 @@ export class NavmenuComponent implements OnInit {
 
     this.authenticationService.currentUser.subscribe(currentUser => {
       if (currentUser) {
-        const user = currentUser;
-        debugger
+        const user = currentUser
         this.userName = user.userName;
         this.isLogin = true;
         this.loginAction = 'Log out'

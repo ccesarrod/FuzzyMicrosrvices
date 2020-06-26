@@ -61,7 +61,7 @@ export class AccountService{
   }
 
   public get authenticatedUser():Observable<User> {
-debugger
+
     if (this.userData){
       //const user = localStorage.getItem('currentUser')
       const x = JSON.parse(localStorage.getItem('currentUser'));

@@ -35,16 +35,11 @@ namespace OrderServer.Controllers
             _consulClient = consulClient;
             this._factory = httpClient;
         }
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+       
 
         // GET api/values/5
         [HttpGet("{id}")]
-        [Authorize]
+        
         public ActionResult<Order> Get(int id)
         {
             var order= _orderAPI.GetById(id);

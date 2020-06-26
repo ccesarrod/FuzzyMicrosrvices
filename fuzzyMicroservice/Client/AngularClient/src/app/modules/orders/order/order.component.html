@@ -1,4 +1,48 @@
-<div class="esh-orders">
+<div class="container">
+  <h1>My Orders</h1>
+  <div class="card w-50 mb-3" *ngFor="let order of sliceOrders">
+    <div class="card-body">
+      <h5 class="card-title">OrderId:{{ order.orderID }}</h5>
+      <div class="card-text justify-content-between">
+        <div class="d-inline-block w-50">Address:{{ order.shipAddress }}</div>
+        <div class="d-inline-block w-50 text-right">
+          <a
+            routerLink="/orders/order-detail/{{ order.OrderID }}"
+            class="btn btn-primary"
+            >Cancel Order</a>
+        </div>
+      </div>
+      <div class="card-text mt-1 justify-content-between">
+        <div class="d-inline-block w-50">City:{{ order.shipCity }}</div>
+
+        <div class="d-inline-block w-50 text-right">
+          <a
+            routerLink="/orders/order-detail/{{ order.OrderID }}"
+            class="btn btn-primary"
+            >Order Detail</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [(page)]="page"
+      [pageSize]="pageSize"
+      [collectionSize]="orders.length"
+    >
+    </ngb-pagination>
+
+    <select class="custom-select" style="width: auto;" [(ngModel)]="pageSize">
+      <option [ngValue]="2">2 items per page</option>
+      <option [ngValue]="4">4 items per page</option>
+      <option [ngValue]="6">6 items per page</option>
+      <option [ngValue]="10">10 items per page</option>
+    </select>
+  </div>
+</div>
+
+<!-- <div class="esh-orders">
  <h1 class="esh-orders-title">My Orders</h1>
   <div class="container">
       <div class="alert alert-warning esh-orders-alert" role="alert" [hidden]="!errorReceived">
@@ -8,11 +52,11 @@
       <table class="table table-striped">
         <thead>
         <tr>
-          <th scope="col">Order number</th>
-          <th scope="col">Date Completed</th>
-          <th scope="col">Ship Date</th>
-          <th scope="col">Address</th>
-          <th scope="col">City</th>
+          <th scope="col" (sortable)="OrderID" (sort)="onSort($event)">Order number</th>
+          <th scope="col" sortable="OrderDate" (sort)="onSort($event)">Date Completed</th>
+          <th scope="col" sortable="ShippedDate" (sort)="onSort($event)">Ship Date</th>
+          <th scope="col" sortable="ShipAddress" (sort)="onSort($event)">Address</th>
+          <th scope="col" sortable="ShipCity" (sort)="onSort($event)">City</th>
           <th scope="col"></th>
         </tr>
         </thead>
@@ -20,10 +64,10 @@
         <tr *ngFor="let order of  sliceOrders">
           <th scope="row">{{order.orderID}}</th>
           <td>
-            {{order.OrderDate | date:'short'}}
+            {{order.orderDate | date:'short'}}
           </td>
           <td>
-            {{order.OrderDate| date:'short'}}
+            {{order.orderDate| date:'short'}}
           </td>
           <td>{{order.shipAddress}}</td>
           <td>{{order.shipCity}}</td>
@@ -44,23 +88,6 @@
           <option [ngValue]="10">10 items per page</option>
         </select>
       </div>
-      <!-- <article class="esh-orders-titles row">
-          <section class="esh-orders-title col-2">Order number</section>
-          <section class="esh-orders-title col-2">Date</section>
-          <section class="esh-orders-title col-4">Address</section>
-          <section class="esh-orders-title col-2">City</section>
-          <section class="esh-orders-title col-2"></section>
-      </article>
-
-      <article class="esh-orders-items row"
-               *ngFor="let order of orders">
-          <section class="esh-orders-item col-2">{{order.orderID}}</section>
-          <section class="esh-orders-item col-2">{{order.OrderDate | date:'short'}}</section>
-          <section class="esh-orders-item col-4"> {{order.shipAddress}}</section>
-          <section class="esh-orders-item col-2">{{order.shipCity}}</section>
-          <section class="esh-orders-item col-2">
-              <a class="esh-orders-link" routerLink="/orders/order-detail/{{order.OrderID}}">Detail</a>
-          </section>
-      </article> -->
+     
   </div>
-</div>
+</div> -->
