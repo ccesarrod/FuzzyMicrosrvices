@@ -3,9 +3,9 @@ using System;
 
 namespace ProductService.Events.Event
 {
-    public class OrderSuccedeEvent:IntegrationEvent
+    public class OrderFulfilledEvent:IntegrationEvent
     {
        public  int OrderId { get; set; }
-       public  DateTime OrderCreated { get; set; }
+       public  bool isFulFill { get; set; }
     }
 }

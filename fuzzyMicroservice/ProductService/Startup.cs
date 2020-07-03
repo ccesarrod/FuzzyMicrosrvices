@@ -42,8 +42,7 @@ namespace ProductService
             });
 
             //services.AddScoped<IRepository<Category>, ICategoryRepository>();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IProductServiceAPI, ProductServiceAPI>();
+          
 
             // configure strongly typed settings objects
             var  authenticationProviderKey= "IdentityApiKey";
@@ -126,8 +125,9 @@ namespace ProductService
                 handlerOverride.Proxy = null;
                 handlerOverride.UseProxy = false;
             }));
-            
 
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductServiceAPI, ProductServiceAPI>();
         }
 
 

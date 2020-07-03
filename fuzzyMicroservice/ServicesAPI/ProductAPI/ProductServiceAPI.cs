@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataCore.Entities;
 using DataCore.Repository;
+using EventCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ServicesAPI.ProductAPI
@@ -19,6 +20,11 @@ namespace ServicesAPI.ProductAPI
         public async Task<ICollection<Product>> GetAll()
         {
             return await _repository.GetAll().ToListAsync(); ;
+        }
+
+        public void Publish(IntegrationEvent integrationEvent)
+        {
+            throw new NotImplementedException();
         }
 
         public bool  UpdateQuantity(int productId, int quantity)

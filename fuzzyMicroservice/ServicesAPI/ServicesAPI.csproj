@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataCore\DataCore.csproj" />
+    <ProjectReference Include="..\EventCore\EventCore.csproj" />
   </ItemGroup>
 
 </Project>

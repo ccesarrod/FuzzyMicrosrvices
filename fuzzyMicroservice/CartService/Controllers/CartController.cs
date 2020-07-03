@@ -109,7 +109,9 @@ namespace CartService.Controllers
             var services = _consulClient.Agent.Services().Result.Response;
 
             var service = services.FirstOrDefault(x => x.Key == "customerService");
-            var url = $"http://{service.Value.Address}:7000/api/customer/{actionPath}";
+            var api = service.Value.Tags[0];
+            var port = service.Value.Port;
+            var url = $"http://{service.Value.Address}:7000/{api}/{actionPath}";
             return url;
         }
 

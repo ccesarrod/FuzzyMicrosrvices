@@ -24,7 +24,8 @@ namespace ServiceDiscovery
                 ID = config.Value.ID,// configuration["consulConfig:ID"], // "productService", //$"{consulConfig.Value.ServiceID}-{uri.Port}",
                 Name = config.Value.Name,//configuration["consulConfig:Name"],//consulConfig.Value.ServiceName,
                 Address = config.Value.Address,
-                Port = config.Value.Port
+                Port = config.Value.Port,
+                Tags = new[] {config.Value.Tag }
             };
 
 

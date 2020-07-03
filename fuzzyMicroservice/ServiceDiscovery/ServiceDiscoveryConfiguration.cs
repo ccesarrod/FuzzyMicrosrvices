@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ServiceDiscovery
+﻿namespace ServiceDiscovery
 {
     public class ServiceDiscoveryConfiguration
     {
@@ -16,5 +12,7 @@ namespace ServiceDiscovery
         public  string Name { get; set; }
         public string Address { get; set; }
         public int Port { get; set; }
+
+        public string Tag { get; set; }
 }
 }
