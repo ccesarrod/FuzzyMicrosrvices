@@ -2,15 +2,15 @@ import { ICartItem } from './cartItem-model';
 import { DecimalPipe } from '@angular/common';
 
 export interface IOrder {
-    OrderID?:number,
-    ShipCity: string;
-    ShipAddress: string;
-    ShipRegion: string;
-    ShipCountry : number;
-    ShipPostalCode : string;
-    OrderDate?:Date; 
-    RequiredDate?:Date;
-    ShippedDate?:Date;
+    orderID?:number,
+    shipCity: string;
+    shipAddress: string;
+    shipRegion: string;
+    shipCountry : number;
+    shipPostalCode : string;
+    orderDate?:string; 
+    requiredDate?:Date;
+    shippedDate?:Date;
    /*  cardnumber: string;
     cardexpiration?: Date;
     expiration?: string;
@@ -20,7 +20,7 @@ export interface IOrder {
     buyer?: string; */
    // ordernumber?: string;
    // total: number;  
-   Order_Detail:ICartItem[];
+   order_Detail:ICartItem[];
 }
 
 

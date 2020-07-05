@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using OrderService.Events;
+using OrderService.Events.EventHandlers;
 using RabbitMQ.Client;
 using ServiceDiscovery;
 using ServicesAPI.CustomerAPI;
@@ -169,7 +170,7 @@ namespace OrderServer
 
         private void RegisterEventBus(IServiceCollection services)
         {
-            var subscriptionClientName = Configuration["SubscriptionClientName"];
+            //var subscriptionClientName = Configuration["SubscriptionClientName"];
 
            
            
@@ -190,7 +191,8 @@ namespace OrderServer
                 });
 
             services.AddTransient<NewOrderStartedEvent>();
-           // services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
+            services.AddHostedService<OrderFulfilledEventHandler>();
+            // services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
 
             //services.AddTransient<ProductPriceChangedIntegrationEventHandler>();
             //services.AddTransient<OrderStartedIntegrationEventHandler>();

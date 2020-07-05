@@ -12,5 +12,7 @@ namespace ServicesAPI.OrderAPI
 
 
         List<OrderDetail> GetOrderDetails(string OrderId);
+
+        void Update(Order order);
     }
 }

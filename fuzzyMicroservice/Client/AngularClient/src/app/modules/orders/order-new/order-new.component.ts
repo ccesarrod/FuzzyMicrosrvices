@@ -43,11 +43,11 @@ export class OrderNewComponent implements OnInit {
   submitForm(orderForm) {
     const raw = this.newOrderForm.getRawValue();
     const order: IOrder = {
-      ShipCity: raw.city,
-      ShipAddress: raw.street,
-      ShipRegion: raw.state,
-      ShipCountry: raw.country,
-      ShipPostalCode : raw.zipcode,
+      shipCity: raw.city,
+      shipAddress: raw.street,
+      shipRegion: raw.state,
+      shipCountry: raw.country,
+      shipPostalCode : raw.zipcode,
      /*  cardnumber: raw.cardnumber,
       cardexpiration: raw.expirationdate,
       expiration: raw.expirationdate,
@@ -55,7 +55,7 @@ export class OrderNewComponent implements OnInit {
       cardholdername: raw.cardholdername,
       cardtypeid: raw.cardtypeid,
       total: this.cartService.totalPrice(),      */
-      Order_Detail:this.cart
+      order_Detail:this.cart
     };
 
     this.orderService.saveOrder(order).subscribe(x => {

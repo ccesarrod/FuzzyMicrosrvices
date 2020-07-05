@@ -22,6 +22,7 @@ namespace ProductService.Events.EventHandlers
 
         private readonly string _hostname;
         private readonly string _queueName = "NewOrderStartedEvent";
+      //
         private readonly string _username;
         private readonly string _password;
         private IProductServiceAPI _productService;
@@ -43,7 +44,7 @@ namespace ProductService.Events.EventHandlers
             {
                 _persistentConnection.TryConnect();
             }
-
+            
             var x = this.GetType().ToString();
             _channel = _persistentConnection.CreateModel();
             _channel.ExchangeDeclare(exchange: _queueName, type: ExchangeType.Fanout, durable: false, autoDelete: false);
@@ -114,8 +115,11 @@ namespace ProductService.Events.EventHandlers
                     }
                     if ( result)
                     {
-                        _productService.
-                        _channel.BasicPublish(_queueName, "", new OrderFulfilledEvent { OrderId = newOrderModel.OrderId, isFulFill = true });
+                       
+                        var eventData= new OrderFulfilledEvent { OrderId = newOrderModel.OrderId, isFulFill = true };
+                        var json = JsonConvert.SerializeObject(eventData);
+                        var body = Encoding.UTF8.GetBytes(json);
+                        _channel.BasicPublish("OrderFulfilledEvent", "OrderFulfilledEvent", null, body);
                     }
                 }
                 catch(Exception ex)

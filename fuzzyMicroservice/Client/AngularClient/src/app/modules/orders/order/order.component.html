@@ -22,10 +22,10 @@
         </div>
       </div>
       <div class="card-text mt-1 justify-content-between">
-        <div class="d-inline-block w-50">Order date:{{ order.OrderDate }}</div>       
+        <div class="d-inline-block w-50">Order date: {{ order.orderDate | date: 'dd-MM-yyyy' }}</div>       
       </div>
       <div class="card-text mt-1 justify-content-between">
-        <div class="d-inline-block w-50">Shippped Date date:{{ order.ShippedDate }}</div>       
+        <div class="d-inline-block w-50">Shippped Date:{{ order.ShippedDate }}</div>       
       </div>
     </div>
   </div>

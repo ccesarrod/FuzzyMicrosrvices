@@ -38,9 +38,10 @@ namespace ServicesAPI.OrderAPI
             throw new NotImplementedException();
         }
 
-        
-
-
-       
+        public void Update(Order order)
+        {
+            _orderRepository.Update(order);
+            _orderRepository.Save();
+        }
     }
 }

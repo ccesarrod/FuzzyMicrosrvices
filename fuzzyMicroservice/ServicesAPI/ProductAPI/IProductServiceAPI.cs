@@ -9,7 +9,6 @@ namespace ServicesAPI.ProductAPI
     {
        Task<ICollection<Product>> GetAll();
         bool UpdateQuantity (int ProductId, int quantity);
-
-        void Publish(IntegrationEvent integrationEvent);
+      
     }
 }

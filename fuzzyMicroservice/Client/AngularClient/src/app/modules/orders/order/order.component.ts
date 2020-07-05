@@ -6,60 +6,12 @@ import { OrderService } from '@services/order.service';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SortableHeadesDirective, SortEvent, SortDirection } from '@shared/sortable-heades.directive';
+import * as moment from 'moment'
 
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 const compare = (v1: string, v2: string) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
-const COUNTRIES: IOrder[] = [
-  {
-    OrderID: 1,
-    ShipAddress:'asasas',
-    ShipCity:'Orlando',
-   ShippedDate:new Date(),
-   OrderDate: new Date(),
-   ShipRegion:'',
-   ShipCountry:32,
-   ShipPostalCode:'32929',
-   Order_Detail:[]
-  },
-  {
-    OrderID: 2,
-    ShipAddress:'basasas',
-    ShipCity:'Seattle',
-   ShippedDate:new Date(),
-   OrderDate: new Date(),
-   ShipRegion:'',
-   ShipCountry:32,
-   ShipPostalCode:'52929',
-   Order_Detail:[]
-  },
-  {
-    OrderID: 3,
-    ShipAddress:'asasas',
-    ShipCity:'Renton',
-   ShippedDate:new Date(),
-   OrderDate: new Date(),
-   ShipRegion:'',
-   ShipCountry:32,
-   ShipPostalCode:'32929',
-   Order_Detail:[]
-  },
-  {
-    OrderID: 4,
-    ShipAddress:'asasas',
-    ShipCity:'London',
-   ShippedDate:new Date(),
-   OrderDate: new Date(),
-   ShipRegion:'',
-   ShipCountry:32,
-   ShipPostalCode:'32929',
-   Order_Detail:[]
-  }
 
-
-
-
-]
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -87,6 +39,11 @@ export class OrderComponent implements OnInit {
       this.service.getOrdersByCustomer()
           .pipe(catchError((err) => this.handleError(err)))
           .subscribe(orders => {        
+             
+              // orders.map(order=>{
+              //   debugger
+              //   order.orderDate=order.orderDate? moment(order.orderDate).format("MM/DD/YYYY"):order.orderDate;
+              // })
               this.orders = orders;
               console.log('orders items retrieved: ' + orders.length);
       });

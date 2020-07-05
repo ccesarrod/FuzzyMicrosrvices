@@ -78,7 +78,7 @@ namespace CustomerService.Controllers
                 {
                     var email = HttpContext.User.Identity.Name;
                     var customer = _customerService.getByEmail(email);
-                    var mapped_orders = MapOrdersToView(customer.Orders.ToList());
+                    var mapped_orders = MapOrdersToView(customer.Orders.OrderByDescending(x=>x.OrderDate).ToList());
                     return Ok(mapped_orders);
                 }
                 catch (Exception ex)

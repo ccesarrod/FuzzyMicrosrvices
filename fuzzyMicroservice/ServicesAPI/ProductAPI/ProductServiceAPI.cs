@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DataCore.Entities;
 using DataCore.Repository;
 using EventCore;
+using EventCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace ServicesAPI.ProductAPI
@@ -22,10 +23,6 @@ namespace ServicesAPI.ProductAPI
             return await _repository.GetAll().ToListAsync(); ;
         }
 
-        public void Publish(IntegrationEvent integrationEvent)
-        {
-            throw new NotImplementedException();
-        }
 
         public bool  UpdateQuantity(int productId, int quantity)
         {
