@@ -6,6 +6,10 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class OrderService {
+    getOrderDetails(id: string): Observable<any[]> {
+        let url = `${environment.apiUrl}/order/getDetails/${id}`;
+        return this.httpclient.get<any[]>(url);
+    }
 
     constructor(private httpclient: HttpClient) {}
 

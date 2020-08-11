@@ -4,12 +4,16 @@ Checkout
 <div class="flex">
  
     <table class="table table-bordered">
-      <tr class="well">
+      <tr class="well" *ngFor="let item of details">
         <td class="tdCenter">
-          <b>Total Quantity:{{ totalCount }} </b>
+          <img class="order-image" src="../../assets/Products/{{ item.productId+ '.jpg'}}">
+          <b>Product Name:{{ item.name }} </b>
+        </td>
+        <td class="tdCenter">
+          <b>Total Quantity:{{  item.quantity }} </b>
         </td>
         <td class="tdRight">
-          <b>Amount: {{ totalPrice }}</b>
+          <b>Amount: {{ item.price }}</b>
         </td>
         <!--  <td src="~/images/glyphicons-237-zoom-in.png" class="img-thumbnail bg-info"></td> -->
         <!-- <td ng-controller="ModalSummaryCtrl"><img src="~/images/glyphicons-237-zoom-in.png" class="img-thumbnail bg-info" ng-click="open('sm')" /></td> -->
@@ -57,8 +61,8 @@ Checkout
             Selected: <b>{{ selected.item }}</b>
         </div> -->
     <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="ok()">OK</button>
-      <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+      <button class="btn btn-primary"><a routerLink="/orders">Back to orders</a></button>
+     
     </div>
   </div>
 </div>

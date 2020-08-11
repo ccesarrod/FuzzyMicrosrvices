@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Consul;
 using DataCore.Entities;
+using DataCore.Models;
 using EventCore.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -51,7 +52,34 @@ namespace OrderServer.Controllers
             return Ok(order);
         }
 
-       
+        // GET api/values/5
+        [HttpGet("getDetails/{id}")]
+
+        public ActionResult<Cart[]> GetDetails(int id)
+        {
+            var order = _orderAPI.GetById(id);
+
+            if (order == null)
+            {
+                return NotFound(); // Returns a NotFoundResult
+            }
+
+            var list = MapToCar(order.Order_Details);
+            return Ok(list);
+        }
+
+        private List<Cart> MapToCar(ICollection<OrderDetail> order_Details)
+        {
+            var list = new List<Cart>();
+
+            order_Details.ToList().ForEach(x => {
+
+                list.Add(new Cart { ProductId = x.ProductID, Quantity = (short)x.Quantity, Price = x.UnitPrice, Name=x.Product.ProductName});
+            });
+
+            return list;
+        }
+
         [HttpGet("getCustomerOrders")]
         [Authorize]
         public async Task<ActionResult<Order>> GetCustomerOrdersAsync()

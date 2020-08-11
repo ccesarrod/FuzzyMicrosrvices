@@ -7,7 +7,7 @@
         <div class="d-inline-block w-50">Address:{{ order.shipAddress }}</div>
         <div class="d-inline-block w-50 text-right">
           <a
-            routerLink="/orders/order-detail/{{ order.OrderID }}"
+            routerLink="/orders/order-detail/{{ order.orderID }}"
             class="btn btn-primary"
             >Cancel Order</a>
         </div>
@@ -16,13 +16,13 @@
         <div class="d-inline-block w-50">City:{{ order.shipCity }}</div>
         <div class="d-inline-block w-50 text-right">
           <a
-            routerLink="/orders/order-detail/{{ order.OrderID }}"
+            routerLink="/orders/order-detail/{{ order.orderID }}"
             class="btn btn-primary"
             >Order Detail</a>
         </div>
       </div>
       <div class="card-text mt-1 justify-content-between">
-        <div class="d-inline-block w-50">Order date: {{ order.orderDate | date: 'dd-MM-yyyy' }}</div>       
+        <div class="d-inline-block w-50">Order date: {{ order.orderDate | date: 'dd-MM-yyyyng ' }}</div>       
       </div>
       <div class="card-text mt-1 justify-content-between">
         <div class="d-inline-block w-50">Shippped Date:{{ order.ShippedDate }}</div>       
