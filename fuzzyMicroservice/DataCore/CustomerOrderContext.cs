@@ -41,7 +41,7 @@ namespace DataCore
         
         }
 
-        public new void Dispose()
+        public override void Dispose()
         {
             base.Dispose();
         }

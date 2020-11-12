@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using ServiceDiscovery;
 using ServicesAPI.CustomerAPI;
 using System;
@@ -92,6 +93,12 @@ namespace CustomerService
                 handlerOverride.Proxy = null;
                 handlerOverride.UseProxy = false;
             }));
+
+            // Register Swagger  
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CustomerService API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -113,6 +120,12 @@ namespace CustomerService
                 endpoints.MapControllers();
             });
             app.UseConsul(Configuration);
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Customer Service API V1");
+            });
         }
        
     }

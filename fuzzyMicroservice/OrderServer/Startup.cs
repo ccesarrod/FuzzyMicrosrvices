@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using OrderService.Events;
 using OrderService.Events.EventHandlers;
 using RabbitMQ.Client;
@@ -140,6 +141,12 @@ namespace OrderServer
 
             services.AddHttpClient();
 
+            // Register Swagger  
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order API", Version = "v1" });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -165,6 +172,11 @@ namespace OrderServer
             });
 
             app.UseConsul(Configuration);
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order API V1");
+            });
 
         }
 
