@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using AutoMapper;
 using CustomerService.Models;
 using DataCore.Entities;
 using DataCore.Models;
@@ -19,9 +20,12 @@ namespace CustomerService.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
-        public CustomerController(ICustomerService customerAPI)
+        private readonly IMapper _mapper;
+
+        public CustomerController(ICustomerService customerAPI, IMapper mapper)
         {
             _customerService = customerAPI;
+            _mapper = mapper;
         }
 
         [HttpPost("savecart")]
@@ -118,7 +122,9 @@ namespace CustomerService.Controllers
 
         private ICollection<OrderViewModel> MapOrdersToView(List<Order> orders)
         {
+           
             var results = new List<OrderViewModel>();
+            results = _mapper.Map<List<Order>, List<OrderViewModel>>(orders);
             orders.ForEach(order =>
             {
                 results.Add(new OrderViewModel
