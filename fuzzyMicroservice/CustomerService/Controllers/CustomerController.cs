@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+//using System.Runtime.InteropServices.WindowsRuntime;
 using AutoMapper;
 using CustomerService.Models;
 using DataCore.Entities;
@@ -125,21 +125,21 @@ namespace CustomerService.Controllers
            
             var results = new List<OrderViewModel>();
             results = _mapper.Map<List<Order>, List<OrderViewModel>>(orders);
-            orders.ForEach(order =>
-            {
-                results.Add(new OrderViewModel
-                {
-                    OrderID = order.OrderID,
-                    OrderDate = order.OrderDate,
-                    ShipAddress = order.ShipAddress,
-                    ShipCity = order.ShipCity,
-                    ShipCountry = order.ShipCountry,
-                    ShipName = order.ShipName,
-                    ShippedDate = order.ShippedDate,
-                    ShipPostalCode = order.ShipPostalCode,
-                    ShipRegion = order.ShipRegion                    
-                });
-            });
+            //orders.ForEach(order =>
+            //{
+            //    results.Add(new OrderViewModel
+            //    {
+            //        OrderID = order.OrderID,
+            //        OrderDate = order.OrderDate,
+            //        ShipAddress = order.ShipAddress,
+            //        ShipCity = order.ShipCity,
+            //        ShipCountry = order.ShipCountry,
+            //        ShipName = order.ShipName,
+            //        ShippedDate = order.ShippedDate,
+            //        ShipPostalCode = order.ShipPostalCode,
+            //        ShipRegion = order.ShipRegion                    
+            //    });
+            //});
             return results.ToArray();
         }
     }

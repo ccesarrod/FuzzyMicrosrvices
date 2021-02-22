@@ -16,9 +16,11 @@ using Microsoft.OpenApi.Models;
 using ServiceDiscovery;
 using ServicesAPI.CustomerAPI;
 using System;
+using AutoMapper;
 
 namespace AuthenticationService
 {
+   
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -100,6 +102,8 @@ namespace AuthenticationService
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Authentication API", Version = "v1" });
             });
+
+            services.AddAutoMapper(typeof(Startup));
 
         }
 

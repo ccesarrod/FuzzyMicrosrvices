@@ -3,12 +3,12 @@ using DataCore.Entities;
 
 namespace CustomerService.Models
 {
-    public class MappingProfile: Profile
-    {
-        public MappingProfile()
-        {
-            CreateMap<Order, OrderViewModel>();
+    //public class MappingProfile: Profile
+    //{
+    //    public MappingProfile()
+    //    {
+    //        CreateMap<Order, OrderViewModel>();
                 
-        }
-    }
+    //    }
+    //}
 }

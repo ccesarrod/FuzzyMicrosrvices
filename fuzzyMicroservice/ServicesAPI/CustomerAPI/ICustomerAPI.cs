@@ -17,5 +17,6 @@ namespace ServicesAPI.CustomerAPI
 
         List<CartDetails> SyncShoppingCart(Customer customer, List<Cart> cartUpdates);
         List<CartDetails> GetShoopingCart(string userEmail);
+       
     }
 }

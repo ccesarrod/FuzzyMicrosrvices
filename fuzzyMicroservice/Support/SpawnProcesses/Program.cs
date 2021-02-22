@@ -68,7 +68,7 @@ namespace SpawnProcesses
             {
                 Console.WriteLine("Starting product service");
                 Process process1 = new Process();
-                process1.StartInfo.CreateNoWindow = false;
+                process1.StartInfo.CreateNoWindow = true;
                 process1.StartInfo.UseShellExecute = false;
                 process1.StartInfo.RedirectStandardOutput = false;
                 process1.StartInfo.FileName = runningPath + @"Support\Startproductservice.bat";
@@ -120,7 +120,7 @@ namespace SpawnProcesses
                 Console.WriteLine("Starting Authentication Service");
 
                 Process process5 = new Process();
-                process5.StartInfo.CreateNoWindow = false;
+                process5.StartInfo.CreateNoWindow = true;
                 process5.StartInfo.UseShellExecute = false;
                 process5.StartInfo.RedirectStandardOutput = false;
                 process5.StartInfo.FileName = runningPath + @"Support\startAuthenticationservice.bat";
@@ -132,7 +132,7 @@ namespace SpawnProcesses
                 Console.WriteLine("Starting Customer Service");
 
                 Process process6 = new Process();
-                process6.StartInfo.CreateNoWindow = false;
+                process6.StartInfo.CreateNoWindow = true;
                 process6.StartInfo.UseShellExecute = false;
                 process6.StartInfo.RedirectStandardOutput = false;
                 process6.StartInfo.FileName = runningPath + @"Support\startCustomerservice.bat";

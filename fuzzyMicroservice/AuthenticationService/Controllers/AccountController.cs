@@ -14,6 +14,8 @@ using DataCore.Models;
 using ServicesAPI.CustomerAPI;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using System.Collections.Generic;
+using AutoMapper;
 
 namespace AuthenticationService.Controllers
 {
@@ -25,17 +27,20 @@ namespace AuthenticationService.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ICustomerService _customerService;
+        private readonly IMapper _mapper;
         private static readonly object _lock = new object();
 
         public AccountController(IOptions<AppSettings> appSettings, 
             SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> 
-            userManager, ICustomerService customerService)
+            userManager, ICustomerService customerService,
+            IMapper mapper)
         {
            
             _appSettings = appSettings.Value;
             _signInManager = signInManager;
             _userManager = userManager;
             _customerService = customerService;
+            _mapper = mapper;
         }
 
 
@@ -50,7 +55,8 @@ namespace AuthenticationService.Controllers
             {
                 var user = await _userManager.FindByNameAsync(login.UserName);
                 var currentCart = _customerService.GetShoopingCart(user.Email);
-                var list = currentCart.Select(i => new Cart() { Id = i.Id, Quantity = i.Quantity, Price = i.Price, ProductId = i.ProductId });
+                var list = _mapper.Map<List<CartDetails>, List<Cart>>(currentCart);
+                // var list = currentCart.Select(i => new Cart() { Id = i.Id, Quantity = i.Quantity, Price = i.Price, ProductId = i.ProductId });
                 string tokenString = GetToken(user.Email);
 
                 return Ok(new
