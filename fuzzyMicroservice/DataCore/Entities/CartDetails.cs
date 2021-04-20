@@ -8,7 +8,7 @@ namespace DataCore.Entities
 
  
         public int Id { get; set; }
-        [MaxLength(5)]
+      
 
         public string CustomerID { get; set; }
         public int ProductId { get; set; }

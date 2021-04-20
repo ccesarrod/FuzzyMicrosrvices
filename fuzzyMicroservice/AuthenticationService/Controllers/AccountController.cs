@@ -41,6 +41,7 @@ namespace AuthenticationService.Controllers
             _userManager = userManager;
             _customerService = customerService;
             _mapper = mapper;
+          
         }
 
 
@@ -55,8 +56,8 @@ namespace AuthenticationService.Controllers
             {
                 var user = await _userManager.FindByNameAsync(login.UserName);
                 var currentCart = _customerService.GetShoopingCart(user.Email);
-                var list = _mapper.Map<List<CartDetails>, List<Cart>>(currentCart);
-                // var list = currentCart.Select(i => new Cart() { Id = i.Id, Quantity = i.Quantity, Price = i.Price, ProductId = i.ProductId });
+                //var list = _mapper.Map<List<CartDetails>, List<Cart>>(currentCart);
+                var list = currentCart.Select(i => new Cart() { Id = i.Id, Quantity = i.Quantity, Price = i.Price, ProductId = i.ProductId });
                 string tokenString = GetToken(user.Email);
 
                 return Ok(new
