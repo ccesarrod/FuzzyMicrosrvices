@@ -12,7 +12,7 @@ export class PaginationComponent implements OnInit {
   ngOnInit() {
   }
 
-  @Input() items:[];
+  @Input() items:[]=[];
   page = 1;
   pageSize = 4;
   collectionSize = this.items.length;
