@@ -1,0 +1,1 @@
+docker run -p 8500:8500 --name=dv_consul -d consul agent -dev  -client=0.0.0.0
