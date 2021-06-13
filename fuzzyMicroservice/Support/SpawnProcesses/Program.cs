@@ -56,7 +56,7 @@ namespace SpawnProcesses
             {
                 Console.WriteLine("Starting Cart Service");
                 Process process0 = new Process();
-                process0.StartInfo.CreateNoWindow = false;
+                process0.StartInfo.CreateNoWindow = true;
                 process0.StartInfo.UseShellExecute = false;
                 process0.StartInfo.RedirectStandardOutput = false;
                 process0.StartInfo.FileName = runningPath + @"Support\Startcartservice.bat";
@@ -81,7 +81,7 @@ namespace SpawnProcesses
             {
                 Console.WriteLine("Starting Order service");
                 Process process2 = new Process();
-                process2.StartInfo.CreateNoWindow = false;
+                process2.StartInfo.CreateNoWindow = true;
                 process2.StartInfo.UseShellExecute = false;
                 process2.StartInfo.RedirectStandardOutput = false;
                 process2.StartInfo.FileName = runningPath + @"Support\StartOrderservice.bat";
