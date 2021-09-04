@@ -120,7 +120,7 @@ namespace SpawnProcesses
                 Console.WriteLine("Starting Authentication Service");
 
                 Process process5 = new Process();
-                process5.StartInfo.CreateNoWindow = true;
+                process5.StartInfo.CreateNoWindow = false;
                 process5.StartInfo.UseShellExecute = false;
                 process5.StartInfo.RedirectStandardOutput = false;
                 process5.StartInfo.FileName = runningPath + @"Support\startAuthenticationservice.bat";
